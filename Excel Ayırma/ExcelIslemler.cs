@@ -10,7 +10,7 @@ using _Excel = Microsoft.Office.Interop.Excel;
 using Range = Microsoft.Office.Interop.Excel.Range;
 
 namespace Excel_Ayırma
-{//Deneme
+{//Deneme2
     public class ExcelIslemler
     {
         _Excel.Application excel = new _Excel.Application();
