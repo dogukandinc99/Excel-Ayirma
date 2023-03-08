@@ -81,6 +81,7 @@
             this.cellvaluetxt.Name = "cellvaluetxt";
             this.cellvaluetxt.Size = new System.Drawing.Size(346, 23);
             this.cellvaluetxt.TabIndex = 3;
+            this.cellvaluetxt.Text = "1-15";
             // 
             // dataGridView1
             // 

@@ -40,6 +40,7 @@ namespace Excel_Ayırma
                 adresstxt.Text = filepath;
                 excel.excelOpen(filepath);
                 cellvaluebtn.Enabled = true;
+                cellvaluetxt.Enabled = true;
                 saveselectedfolderbtn.Enabled = true;
                 listbtn.Enabled = true;
                 excelclosebtn.Enabled = true;
@@ -58,8 +59,6 @@ namespace Excel_Ayırma
 
         private void cellvaluebtn_Click(object sender, EventArgs e)
         {
-            cellvaluetxt.Text = ofd.SafeFileName.ToString();
-
             listBox1.Items.Clear();
             for (int i = 0; i < excel.dizi.Length; i++)
             {
@@ -81,7 +80,7 @@ namespace Excel_Ayırma
 
         private void saveexcelbtn_Click(object sender, EventArgs e)
         {
-            excel.saveExcel(dataGridView1, saveadressfoldertxt.Text, ofd.SafeFileName.ToString());
+            excel.saveExcel(saveadressfoldertxt.Text, cellvaluetxt.Text + "_" + ofd.SafeFileName.ToString());
         }
 
         private void excelclosebtn_Click(object sender, EventArgs e)
@@ -89,6 +88,7 @@ namespace Excel_Ayırma
             excel.excelquit();
             fileselectbtn.Enabled = true;
             cellvaluebtn.Enabled = false;
+            cellvaluetxt.Enabled = false;
             listbtn.Enabled = false;
             saveselectedfolderbtn.Enabled = false;
             saveexcelbtn.Enabled = false;
