@@ -19,7 +19,7 @@ namespace Excel_Ayırma
         Range range, range1, range2;
         int rowsCount = 0, columnsCount = 0;
 
-        System.Data.DataTable dataTablelist = new System.Data.DataTable("Excel-List");
+        System.Data.DataTable dataTableList = new System.Data.DataTable("Excel-List");
 
         public String[] dizi = new String[10];
         int columncontrolnumber = 8;
@@ -34,6 +34,7 @@ namespace Excel_Ayırma
             rowsCount = range.Rows.Count;
             columnsCount = range.Columns.Count;
             dataTable();
+            sheetnamelist();
             workbook.Close();
             excel.Quit();
         }
@@ -57,14 +58,18 @@ namespace Excel_Ayırma
         }
 
 
-        // Adresdeki exceli dataTablelist nesnesine aktarır.
+        // Adresdeki exceli dataTableList nesnesine aktarır.
         void dataTable()
         {
             try
             {
-                for (int i = 0; i < columnsCount; i++)
+                // dataTableList nesnesine column oluşturuyor.
+                if (dataTableList.Columns.Count != columnsCount)
                 {
-                    dataTablelist.Columns.Add(getReadCell(0, i), typeof(string));
+                    for (int i = 0; i < columnsCount; i++)
+                    {
+                        dataTableList.Columns.Add(getReadCell(0, i), typeof(string));
+                    }
                 }
 
                 String[] rows = new string[columnsCount];
@@ -78,7 +83,26 @@ namespace Excel_Ayırma
                     {
                         rows[j] = getReadCell(i, j);
                     }
-                    dataTablelist.Rows.Add(rows);
+                    dataTableList.Rows.Add(rows);
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Kayıtlar aktarılırken beklenmedik bir hata oluştu. " +
+                    "Lütfen teknik birim ile iletişime geçiniz.\n Hata kodu:" + e.Message.ToString());
+                excelquit();
+            }
+        }
+
+        void sheetnamelist()
+        {
+            String cellvalue = "";
+            int sayac = 0;
+            try
+            {
+                for (int i = 1; i < rowsCount - 1; i++)
+                {
+                    cellvalue = getReadCell(i, columncontrolnumber);
                     if (cellvalue == getReadCell(i - 1, columncontrolnumber) || getReadCell(i - 1, columncontrolnumber) == "")
                     {
 
@@ -93,21 +117,20 @@ namespace Excel_Ayırma
             }
             catch (Exception e)
             {
-                MessageBox.Show("Kayıtlar aktarılırken beklenmedik bir hata oluştu. " +
-                    "Lütfen teknik birim ile iletişime geçiniz.\n Hata kodu:" + e.Message.ToString());
-                excelquit();
+                MessageBox.Show(e.ToString());
             }
+
         }
 
 
-        // dataTablelist nesnesini farklı yerlerde kullanabilmek için oluşturuldu.
-        public DataTable getDataTable() { return dataTablelist; }
+        // dataTableList nesnesini farklı yerlerde kullanabilmek için oluşturuldu.
+        public DataTable getDataTable() { return dataTableList; }
 
 
         // Boş satır oluşturur.
         DataRow emptyRowSpace()
         {
-            DataRow dr = dataTablelist.NewRow();
+            DataRow dr = dataTableList.NewRow();
             for (int j = 0; j < columnsCount; j++)
             {
                 dr[j] = "";
@@ -120,15 +143,18 @@ namespace Excel_Ayırma
         public void addworksheet(String sheetname)
         {
             _Excel.Sheets sheets = workbook.Worksheets;
-            var xlYeniSayfa = (_Excel.Worksheet)sheets.Add();
+            if (!sheets.Equals(sheetname))
+            {
+                var xlYeniSayfa = (_Excel.Worksheet)sheets.Add();
 
-            if (sheetname.Length < 30)
-            {
-                xlYeniSayfa.Name = sheetname.ToString();
-            }
-            else
-            {
-                xlYeniSayfa.Name = sheetname.Substring(0, 15).ToString();
+                if (sheetname.Length < 30)
+                {
+                    xlYeniSayfa.Name = sheetname.ToString();
+                }
+                else
+                {
+                    xlYeniSayfa.Name = sheetname.Substring(0, 15).ToString();
+                }
             }
         }
 
@@ -143,10 +169,10 @@ namespace Excel_Ayırma
                 {
                     addworksheet(dizi[i].ToString());
                     worksheet = workbook.Worksheets[1];
-                    for (int j = 0; j < dataTablelist.Columns.Count; j++)
+                    for (int j = 0; j < dataTableList.Columns.Count; j++)
                     {
                         range1 = (Range)worksheet.Cells[1, 1];
-                        range1.Cells[1, j + 1] = dataTablelist.Columns[j];
+                        range1.Cells[1, j + 1] = dataTableList.Columns[j];
                     }
                 }
                 else
@@ -155,11 +181,11 @@ namespace Excel_Ayırma
             int row = 1;
             String control = dizi[0];
             String sheetcellvalue = "";
-            for (int i = 0; i < dataTablelist.Rows.Count; i++)
+            for (int i = 0; i < dataTableList.Rows.Count; i++)
             {
                 for (int k = 0; k < dizi.Length; k++)
                 {
-                    if (dataTablelist.Rows[i][columncontrolnumber].ToString() == dizi[k] && dizi[k] != null && dataTablelist.Rows[i][columncontrolnumber].ToString() != null)
+                    if (dataTableList.Rows[i][columncontrolnumber].ToString() == dizi[k] && dizi[k] != null && dataTableList.Rows[i][columncontrolnumber].ToString() != null)
                     {
                         sheetcellvalue = dizi[k];
                         worksheet = workbook.Worksheets[sheetnamelenght(sheetcellvalue).ToString()];
@@ -171,15 +197,14 @@ namespace Excel_Ayırma
                     control = sheetcellvalue;
                     row = 1;
                 }
-                for (int j = 0; j < dataTablelist.Columns.Count; j++)
+                for (int j = 0; j < dataTableList.Columns.Count; j++)
                 {
                     range2 = (Range)worksheet.Cells[row, j + 1];
-                    range2.Cells[2, 1] = dataTablelist.Rows[i][j].ToString();
+                    range2.Cells[2, 1] = dataTableList.Rows[i][j].ToString();
                 }
                 row++;
             }
             workbook.SaveAs(@adres + @"\" + filename, _Excel.XlFileFormat.xlWorkbookNormal);
-            excelquit();
         }
 
 
@@ -198,23 +223,32 @@ namespace Excel_Ayırma
             return control;
         }
 
-        public void sheetSort(int controlcolumn)
+        void sheetColumnControlNumber(String sheetname)
         {
-            String control = "";
-            for (int i = 0; i < dizi.Length; i++)
+            switch (sheetname)
             {
-                if (dizi[i] != null)
-                {
-                    control = sheetnamelenght(dizi[i]);
-                    worksheet = workbook.Worksheets[control.ToString()];
-                    int deger = int.Parse(Interaction.InputBox(control + " sayfası için kaçıncı sütuna bakılsın!", "Sütun Kontrol...").ToString());
-
-                }
+                case "A HABER":
+                    columncontrolnumber = 10;
+                    break;
+                case "A SPOR":
+                    columncontrolnumber = 10;
+                    break;
+                case "APARA":
+                    columncontrolnumber = 10;
+                    break;
+                case "ATV":
+                    columncontrolnumber = 9;
+                    break;
+                default:
+                    columncontrolnumber = 8;
+                    break;
             }
+
         }
 
         public void excelquit()
         {
+            workbook.Close();
             excel.Quit();
         }
     }
