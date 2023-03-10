@@ -97,12 +97,13 @@ namespace Excel_Ayırma
         void sheetnamelist()
         {
             String cellvalue = "";
-            int sayac = 0;
+            int sayac = 0, control = 0;
             try
             {
                 for (int i = 1; i < rowsCount - 1; i++)
                 {
                     cellvalue = getReadCell(i, columncontrolnumber);
+
                     if (cellvalue == getReadCell(i - 1, columncontrolnumber) || getReadCell(i - 1, columncontrolnumber) == "")
                     {
 
@@ -110,8 +111,18 @@ namespace Excel_Ayırma
                     else
                     {
                         String sheetname = cellvalue;
-                        dizi[sayac] = sheetname;
-                        sayac += 1;
+                        for (int j = 0; j < dizi.Length; j++)
+                        {
+                            if (dizi[j] == sheetname)
+                            {
+                                control++;
+                            }
+                        }
+                        if (control == 0)
+                        {
+                            dizi[sayac] = sheetname;
+                            sayac += 1;
+                        }
                     }
                 }
             }
@@ -143,19 +154,12 @@ namespace Excel_Ayırma
         public void addworksheet(String sheetname)
         {
             _Excel.Sheets sheets = workbook.Worksheets;
-            if (!sheets.Equals(sheetname))
+            foreach (var item in sheets)
             {
-                var xlYeniSayfa = (_Excel.Worksheet)sheets.Add();
-
-                if (sheetname.Length < 30)
-                {
-                    xlYeniSayfa.Name = sheetname.ToString();
-                }
-                else
-                {
-                    xlYeniSayfa.Name = sheetname.Substring(0, 15).ToString();
-                }
+                MessageBox.Show(item.ToString());
             }
+            var xlYeniSayfa = (_Excel.Worksheet)sheets.Add();
+            xlYeniSayfa.Name = sheetname.ToString();
         }
 
 
@@ -167,7 +171,7 @@ namespace Excel_Ayırma
             {
                 if (dizi[i] != null)
                 {
-                    addworksheet(dizi[i].ToString());
+                    addworksheet(sheetnamelenght(dizi[i].ToString()));
                     worksheet = workbook.Worksheets[1];
                     for (int j = 0; j < dataTableList.Columns.Count; j++)
                     {
