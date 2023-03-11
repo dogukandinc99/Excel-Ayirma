@@ -33,6 +33,8 @@ namespace Excel_Ayırma
             range = worksheet.UsedRange;
             rowsCount = range.Rows.Count;
             columnsCount = range.Columns.Count;
+            dataTableList.Clear();
+            Array.Clear(dizi, 0, dizi.Length);
             dataTable();
             sheetnamelist();
             workbook.Close();
@@ -94,6 +96,8 @@ namespace Excel_Ayırma
             }
         }
 
+
+        // Sayfa oluşturmak için aynı değerleri teke indirip diziye ekliyor
         void sheetnamelist()
         {
             String cellvalue = "";
@@ -121,16 +125,17 @@ namespace Excel_Ayırma
                         if (control == 0)
                         {
                             dizi[sayac] = sheetname;
+                            MessageBox.Show(dizi[sayac] + " " + control);
                             sayac += 1;
                         }
+                        control = 0;
                     }
                 }
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.ToString());
+                MessageBox.Show("hata mesajı:" + e.ToString());
             }
-
         }
 
 
