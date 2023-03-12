@@ -43,7 +43,7 @@ namespace Excel_Ayırma
 
 
         // Exceldeki hücreyi getirir. Eğer hücre boş ise geriye "Empty" değerini dönderir.
-        public String getReadCell(int i, int j)
+        String getReadCell(int i, int j)
         {
             string value;
             i++;
@@ -155,7 +155,7 @@ namespace Excel_Ayırma
 
 
         // Excel dosyasına yeni sayfa ekler.
-        public void addworksheet(String sheetname)
+        void addworksheet(String sheetname)
         {
             _Excel.Sheets sheets = workbook.Worksheets;
             foreach (var item in sheets)
