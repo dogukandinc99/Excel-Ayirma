@@ -76,7 +76,6 @@ namespace Excel_Ayırma
 
                 String[] rows = new string[columnsCount];
                 String cellvalue = "";
-                int sayac = 0;
 
                 for (int i = 1; i < rowsCount - 1; i++)
                 {
