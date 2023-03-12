@@ -16,7 +16,7 @@ namespace Excel_Ayırma
         _Excel.Application excel = new _Excel.Application();
         _Excel.Workbook workbook;
         _Excel.Worksheet worksheet;
-        Range range, range1, range2;
+        Range range, range1;
         int rowsCount = 0, columnsCount = 0;
 
         System.Data.DataTable dataTableList = new System.Data.DataTable("Excel-List");
@@ -180,8 +180,8 @@ namespace Excel_Ayırma
                     worksheet = workbook.Worksheets[1];
                     for (int j = 0; j < dataTableList.Columns.Count; j++)
                     {
-                        range1 = (Range)worksheet.Cells[1, 1];
-                        range1.Cells[1, j + 1] = dataTableList.Columns[j];
+                        range = (Range)worksheet.Cells[1, 1];
+                        range.Cells[1, j + 1] = dataTableList.Columns[j];
                     }
                 }
                 else
@@ -208,8 +208,8 @@ namespace Excel_Ayırma
                 }
                 for (int j = 0; j < dataTableList.Columns.Count; j++)
                 {
-                    range2 = (Range)worksheet.Cells[row, j + 1];
-                    range2.Cells[2, 1] = dataTableList.Rows[i][j].ToString();
+                    range1 = (Range)worksheet.Cells[row, j + 1];
+                    range1.Cells[2, 1] = dataTableList.Rows[i][j].ToString();
                 }
                 row++;
             }
