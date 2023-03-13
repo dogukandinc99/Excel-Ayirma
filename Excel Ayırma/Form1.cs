@@ -83,6 +83,11 @@ namespace Excel_Ayırma
             excel.saveExcel(saveadressfoldertxt.Text, cellvaluetxt.Text + "_" + ofd.SafeFileName.ToString());
         }
 
+        private void testbtn_Click(object sender, EventArgs e)
+        {
+            excel.sheetRowSpace();
+        }
+
         private void excelclosebtn_Click(object sender, EventArgs e)
         {
             excel.excelquit();

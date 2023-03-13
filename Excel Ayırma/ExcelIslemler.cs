@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualBasic;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -20,6 +21,7 @@ namespace Excel_Ayırma
         int rowsCount = 0, columnsCount = 0;
 
         System.Data.DataTable dataTableList = new System.Data.DataTable("Excel-List");
+        System.Data.DataTable dataTableList2 = new System.Data.DataTable("Excel-Sheet-List");
 
         public String[] dizi = new String[10];
         int columncontrolnumber = 8;
@@ -30,15 +32,22 @@ namespace Excel_Ayırma
         {
             workbook = excel.Workbooks.Open(path);
             worksheet = workbook.Worksheets[1];
+            defaultValue();
+            dataTable();
+            sheetnamelist();
+            workbook.Close();
+            excel.Quit();
+        }
+
+
+        void defaultValue()
+        {
             range = worksheet.UsedRange;
             rowsCount = range.Rows.Count;
             columnsCount = range.Columns.Count;
             dataTableList.Clear();
             Array.Clear(dizi, 0, dizi.Length);
             dataTable();
-            sheetnamelist();
-            workbook.Close();
-            excel.Quit();
         }
 
 
@@ -124,7 +133,6 @@ namespace Excel_Ayırma
                         if (control == 0)
                         {
                             dizi[sayac] = sheetname;
-                            MessageBox.Show(dizi[sayac] + " " + control);
                             sayac += 1;
                         }
                         control = 0;
@@ -158,17 +166,13 @@ namespace Excel_Ayırma
         void addworksheet(String sheetname)
         {
             _Excel.Sheets sheets = workbook.Worksheets;
-            foreach (var item in sheets)
-            {
-                MessageBox.Show(item.ToString());
-            }
             var xlYeniSayfa = (_Excel.Worksheet)sheets.Add();
             xlYeniSayfa.Name = sheetname.ToString();
         }
 
 
         // dataTableList nesnesini yeni bir excele kaydeder.
-        public void saveExcel(String adres, String filename)
+        void newExcel(String adres, String filename)
         {
             workbook = excel.Workbooks.Add(System.Reflection.Missing.Value);
             for (int i = 0; i < dizi.Length; i++)
@@ -212,6 +216,71 @@ namespace Excel_Ayırma
                 }
                 row++;
             }
+        }
+
+        public void sheetRowSpace()
+        {
+            String sheetname = "";
+            for (int i = 1; i < 2; i++)
+            {
+                worksheet = workbook.Worksheets[i];
+                dataTable();
+                sheetname = worksheet.Name;
+                switch (sheetname)
+                {
+                    case "A HABER":
+                        columncontrolnumber = 10;
+                        break;
+                    case "A SPOR":
+                        columncontrolnumber = 10;
+                        break;
+                    case "APARA":
+                        columncontrolnumber = 10;
+                        break;
+                    case "ATV":
+                        columncontrolnumber = 9;
+                        break;
+                    case "VAV":
+                        columncontrolnumber = 9;
+                        break;
+                    default:
+                        columncontrolnumber = 8;
+                        break;
+                }
+
+                String cellvalue = "";
+
+                for (int j = 1; j < rowsCount - 1; j++)
+                {
+                    cellvalue = getReadCell(j, columncontrolnumber);
+
+                    if (cellvalue == getReadCell(j - 1, columncontrolnumber) || getReadCell(j - 1, columncontrolnumber) == "")
+                    {
+                        MessageBox.Show("Buraya girdi.");
+                    }
+                    else
+                    {
+
+                        dataTableList.Rows.Add(emptyRowSpace());
+                    }
+                }
+                int row = 1;
+                for (int j = 0; j < dataTableList.Rows.Count; j++)
+                {
+                    for (int k = 0; k < dataTableList.Columns.Count; k++)
+                    {
+                        range1 = (Range)worksheet.Cells[row, k + 1];
+                        range1.Cells[2, 1] = dataTableList.Rows[j][k].ToString();
+                    }
+                    row++;
+                }
+            }
+        }
+
+        public void saveExcel(String adres, String filename)
+        {
+            newExcel(adres, filename);
+            sheetRowSpace();
             workbook.SaveAs(@adres + @"\" + filename, _Excel.XlFileFormat.xlWorkbookNormal);
         }
 
@@ -231,28 +300,6 @@ namespace Excel_Ayırma
             return control;
         }
 
-        void sheetColumnControlNumber(String sheetname)
-        {
-            switch (sheetname)
-            {
-                case "A HABER":
-                    columncontrolnumber = 10;
-                    break;
-                case "A SPOR":
-                    columncontrolnumber = 10;
-                    break;
-                case "APARA":
-                    columncontrolnumber = 10;
-                    break;
-                case "ATV":
-                    columncontrolnumber = 9;
-                    break;
-                default:
-                    columncontrolnumber = 8;
-                    break;
-            }
-
-        }
 
         public void excelquit()
         {

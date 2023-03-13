@@ -41,6 +41,7 @@
             this.saveselectedfolderbtn = new System.Windows.Forms.Button();
             this.saveexcelbtn = new System.Windows.Forms.Button();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.testbtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
@@ -95,9 +96,9 @@
             // listbtn
             // 
             this.listbtn.Enabled = false;
-            this.listbtn.Location = new System.Drawing.Point(576, 97);
+            this.listbtn.Location = new System.Drawing.Point(576, 249);
             this.listbtn.Name = "listbtn";
-            this.listbtn.Size = new System.Drawing.Size(65, 124);
+            this.listbtn.Size = new System.Drawing.Size(65, 92);
             this.listbtn.TabIndex = 5;
             this.listbtn.Text = "Listele";
             this.listbtn.UseVisualStyleBackColor = true;
@@ -153,9 +154,9 @@
             // saveexcelbtn
             // 
             this.saveexcelbtn.Enabled = false;
-            this.saveexcelbtn.Location = new System.Drawing.Point(576, 220);
+            this.saveexcelbtn.Location = new System.Drawing.Point(576, 98);
             this.saveexcelbtn.Name = "saveexcelbtn";
-            this.saveexcelbtn.Size = new System.Drawing.Size(65, 124);
+            this.saveexcelbtn.Size = new System.Drawing.Size(65, 95);
             this.saveexcelbtn.TabIndex = 11;
             this.saveexcelbtn.Text = "Kaydet";
             this.saveexcelbtn.UseVisualStyleBackColor = true;
@@ -173,11 +174,22 @@
             0,
             0});
             // 
+            // testbtn
+            // 
+            this.testbtn.Location = new System.Drawing.Point(576, 199);
+            this.testbtn.Name = "testbtn";
+            this.testbtn.Size = new System.Drawing.Size(65, 44);
+            this.testbtn.TabIndex = 13;
+            this.testbtn.Text = "Test";
+            this.testbtn.UseVisualStyleBackColor = true;
+            this.testbtn.Click += new System.EventHandler(this.testbtn_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(671, 395);
+            this.Controls.Add(this.testbtn);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.saveexcelbtn);
             this.Controls.Add(this.saveselectedfolderbtn);
@@ -215,5 +227,6 @@
         private Button saveselectedfolderbtn;
         private Button saveexcelbtn;
         private NumericUpDown numericUpDown1;
+        private Button testbtn;
     }
 }
