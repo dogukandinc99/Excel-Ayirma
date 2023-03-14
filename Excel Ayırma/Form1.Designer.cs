@@ -48,7 +48,7 @@
             // 
             // fileselectbtn
             // 
-            this.fileselectbtn.Location = new System.Drawing.Point(420, 11);
+            this.fileselectbtn.Location = new System.Drawing.Point(566, 9);
             this.fileselectbtn.Name = "fileselectbtn";
             this.fileselectbtn.Size = new System.Drawing.Size(150, 23);
             this.fileselectbtn.TabIndex = 0;
@@ -59,15 +59,15 @@
             // adresstxt
             // 
             this.adresstxt.Enabled = false;
-            this.adresstxt.Location = new System.Drawing.Point(44, 12);
+            this.adresstxt.Location = new System.Drawing.Point(12, 9);
             this.adresstxt.Name = "adresstxt";
-            this.adresstxt.Size = new System.Drawing.Size(346, 23);
+            this.adresstxt.Size = new System.Drawing.Size(525, 23);
             this.adresstxt.TabIndex = 1;
             // 
             // cellvaluebtn
             // 
             this.cellvaluebtn.Enabled = false;
-            this.cellvaluebtn.Location = new System.Drawing.Point(420, 40);
+            this.cellvaluebtn.Location = new System.Drawing.Point(566, 38);
             this.cellvaluebtn.Name = "cellvaluebtn";
             this.cellvaluebtn.Size = new System.Drawing.Size(150, 23);
             this.cellvaluebtn.TabIndex = 2;
@@ -78,25 +78,25 @@
             // cellvaluetxt
             // 
             this.cellvaluetxt.Enabled = false;
-            this.cellvaluetxt.Location = new System.Drawing.Point(44, 41);
+            this.cellvaluetxt.Location = new System.Drawing.Point(12, 38);
             this.cellvaluetxt.Name = "cellvaluetxt";
-            this.cellvaluetxt.Size = new System.Drawing.Size(346, 23);
+            this.cellvaluetxt.Size = new System.Drawing.Size(525, 23);
             this.cellvaluetxt.TabIndex = 3;
             this.cellvaluetxt.Text = "1-15";
             // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(44, 97);
+            this.dataGridView1.Location = new System.Drawing.Point(12, 94);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 25;
-            this.dataGridView1.Size = new System.Drawing.Size(346, 247);
+            this.dataGridView1.Size = new System.Drawing.Size(525, 247);
             this.dataGridView1.TabIndex = 4;
             // 
             // listbtn
             // 
             this.listbtn.Enabled = false;
-            this.listbtn.Location = new System.Drawing.Point(576, 249);
+            this.listbtn.Location = new System.Drawing.Point(722, 249);
             this.listbtn.Name = "listbtn";
             this.listbtn.Size = new System.Drawing.Size(65, 92);
             this.listbtn.TabIndex = 5;
@@ -106,17 +106,17 @@
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(44, 360);
+            this.progressBar1.Location = new System.Drawing.Point(12, 357);
             this.progressBar1.Maximum = 10000;
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(526, 23);
+            this.progressBar1.Size = new System.Drawing.Size(705, 23);
             this.progressBar1.TabIndex = 6;
             // 
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
             this.listBox1.ItemHeight = 15;
-            this.listBox1.Location = new System.Drawing.Point(420, 97);
+            this.listBox1.Location = new System.Drawing.Point(566, 95);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(150, 244);
             this.listBox1.TabIndex = 7;
@@ -124,7 +124,7 @@
             // excelclosebtn
             // 
             this.excelclosebtn.Enabled = false;
-            this.excelclosebtn.Location = new System.Drawing.Point(576, 11);
+            this.excelclosebtn.Location = new System.Drawing.Point(722, 8);
             this.excelclosebtn.Name = "excelclosebtn";
             this.excelclosebtn.Size = new System.Drawing.Size(65, 79);
             this.excelclosebtn.TabIndex = 8;
@@ -135,15 +135,15 @@
             // saveadressfoldertxt
             // 
             this.saveadressfoldertxt.Enabled = false;
-            this.saveadressfoldertxt.Location = new System.Drawing.Point(44, 70);
+            this.saveadressfoldertxt.Location = new System.Drawing.Point(12, 67);
             this.saveadressfoldertxt.Name = "saveadressfoldertxt";
-            this.saveadressfoldertxt.Size = new System.Drawing.Size(346, 23);
+            this.saveadressfoldertxt.Size = new System.Drawing.Size(525, 23);
             this.saveadressfoldertxt.TabIndex = 9;
             // 
             // saveselectedfolderbtn
             // 
             this.saveselectedfolderbtn.Enabled = false;
-            this.saveselectedfolderbtn.Location = new System.Drawing.Point(420, 70);
+            this.saveselectedfolderbtn.Location = new System.Drawing.Point(566, 68);
             this.saveselectedfolderbtn.Name = "saveselectedfolderbtn";
             this.saveselectedfolderbtn.Size = new System.Drawing.Size(150, 23);
             this.saveselectedfolderbtn.TabIndex = 10;
@@ -154,7 +154,7 @@
             // saveexcelbtn
             // 
             this.saveexcelbtn.Enabled = false;
-            this.saveexcelbtn.Location = new System.Drawing.Point(576, 98);
+            this.saveexcelbtn.Location = new System.Drawing.Point(722, 95);
             this.saveexcelbtn.Name = "saveexcelbtn";
             this.saveexcelbtn.Size = new System.Drawing.Size(65, 95);
             this.saveexcelbtn.TabIndex = 11;
@@ -164,7 +164,7 @@
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(579, 360);
+            this.numericUpDown1.Location = new System.Drawing.Point(725, 357);
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(62, 23);
             this.numericUpDown1.TabIndex = 12;
@@ -176,7 +176,7 @@
             // 
             // testbtn
             // 
-            this.testbtn.Location = new System.Drawing.Point(576, 199);
+            this.testbtn.Location = new System.Drawing.Point(722, 196);
             this.testbtn.Name = "testbtn";
             this.testbtn.Size = new System.Drawing.Size(65, 44);
             this.testbtn.TabIndex = 13;
@@ -188,7 +188,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(671, 395);
+            this.ClientSize = new System.Drawing.Size(798, 395);
             this.Controls.Add(this.testbtn);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.saveexcelbtn);

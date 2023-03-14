@@ -21,7 +21,6 @@ namespace Excel_Ayırma
         int rowsCount = 0, columnsCount = 0;
 
         System.Data.DataTable dataTableList = new System.Data.DataTable("Excel-List");
-        System.Data.DataTable dataTableList2 = new System.Data.DataTable("Excel-Sheet-List");
 
         public String[] dizi = new String[10];
         int columncontrolnumber = 8;
@@ -33,7 +32,6 @@ namespace Excel_Ayırma
             workbook = excel.Workbooks.Open(path);
             worksheet = workbook.Worksheets[1];
             defaultValue();
-            dataTable();
             sheetnamelist();
             workbook.Close();
             excel.Quit();
@@ -86,7 +84,7 @@ namespace Excel_Ayırma
                 String[] rows = new string[columnsCount];
                 String cellvalue = "";
 
-                for (int i = 1; i < rowsCount - 1; i++)
+                for (int i = 1; i < rowsCount; i++)
                 {
                     cellvalue = getReadCell(i, columncontrolnumber);
                     for (int j = 0; j < columnsCount; j++)
@@ -218,13 +216,27 @@ namespace Excel_Ayırma
             }
         }
 
+
+        void dataTableListClear()
+        {
+            for (int i = 0; i < rowsCount; i++)
+            {
+                dataTableList.Rows[i].Delete();
+            }
+            MessageBox.Show("Silindi");
+        }
+
         public void sheetRowSpace()
         {
+            //dataTableListClear();
+
             String sheetname = "";
-            for (int i = 1; i < 2; i++)
+            int sayac;
+            for (int i = 1; i < workbook.Worksheets.Count; i++)
             {
+                sayac = 0;
                 worksheet = workbook.Worksheets[i];
-                dataTable();
+                defaultValue();
                 sheetname = worksheet.Name;
                 switch (sheetname)
                 {
@@ -243,6 +255,9 @@ namespace Excel_Ayırma
                     case "VAV":
                         columncontrolnumber = 9;
                         break;
+                    case "TEKNIK BILGI ISLEM":
+                        columncontrolnumber = 11;
+                        break;
                     default:
                         columncontrolnumber = 8;
                         break;
@@ -250,23 +265,29 @@ namespace Excel_Ayırma
 
                 String cellvalue = "";
 
-                for (int j = 1; j < rowsCount - 1; j++)
+
+                for (int j = 1; j < rowsCount; j++)
                 {
                     cellvalue = getReadCell(j, columncontrolnumber);
 
+
                     if (cellvalue == getReadCell(j - 1, columncontrolnumber) || getReadCell(j - 1, columncontrolnumber) == "")
                     {
-                        MessageBox.Show("Buraya girdi.");
+
                     }
                     else
                     {
+                        dataTableList.Rows.InsertAt(emptyRowSpace(), sayac);
+                        sayac++;
 
-                        dataTableList.Rows.Add(emptyRowSpace());
                     }
+                    sayac++;
+
                 }
                 int row = 1;
                 for (int j = 0; j < dataTableList.Rows.Count; j++)
                 {
+
                     for (int k = 0; k < dataTableList.Columns.Count; k++)
                     {
                         range1 = (Range)worksheet.Cells[row, k + 1];
