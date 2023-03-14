@@ -1,12 +1,3 @@
-using ClosedXML.Excel;
-using DocumentFormat.OpenXml.Drawing;
-using DocumentFormat.OpenXml.Spreadsheet;
-using Microsoft.VisualBasic;
-using System.Data;
-using System.Text.Json.Serialization;
-using System.Windows.Forms;
-
-
 namespace Excel_Ayırma
 {
     public partial class Form1 : Form

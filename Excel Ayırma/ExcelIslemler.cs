@@ -1,12 +1,4 @@
-﻿using DocumentFormat.OpenXml.Spreadsheet;
-using Microsoft.VisualBasic;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data;
 using _Excel = Microsoft.Office.Interop.Excel;
 using Range = Microsoft.Office.Interop.Excel.Range;
 
@@ -33,11 +25,11 @@ namespace Excel_Ayırma
             worksheet = workbook.Worksheets[1];
             defaultValue();
             sheetnamelist();
-            workbook.Close();
-            excel.Quit();
+            excelquit();
         }
 
 
+        // Exceli açtıktan sonra başka işlemler için yeniden çağırmam gerektiğinden dolayı excelOpen methodundan ayırdım.
         void defaultValue()
         {
             range = worksheet.UsedRange;
@@ -217,19 +209,9 @@ namespace Excel_Ayırma
         }
 
 
-        void dataTableListClear()
-        {
-            for (int i = 0; i < rowsCount; i++)
-            {
-                dataTableList.Rows[i].Delete();
-            }
-            MessageBox.Show("Silindi");
-        }
-
+        // Kaydedilecek yeni excelde sayfa sayfa gezerek sütuna göre farklı olan satırların arasına boşluk bırakıp yeni excele aktarır.
         public void sheetRowSpace()
         {
-            //dataTableListClear();
-
             String sheetname = "";
             int sayac;
             for (int i = 1; i < workbook.Worksheets.Count; i++)
@@ -298,6 +280,8 @@ namespace Excel_Ayırma
             }
         }
 
+
+        // Yeni exceli kaydeder.
         public void saveExcel(String adres, String filename)
         {
             newExcel(adres, filename);
@@ -322,6 +306,7 @@ namespace Excel_Ayırma
         }
 
 
+        // Açık olan exceli kapatır.
         public void excelquit()
         {
             workbook.Close();
