@@ -76,7 +76,7 @@ namespace Excel_Ayırma
                 String[] rows = new string[columnsCount];
                 String cellvalue = "";
 
-                for (int i = 1; i < rowsCount; i++)
+                for (int i = 1; i < rowsCount - 1; i++)
                 {
                     cellvalue = getReadCell(i, columncontrolnumber);
                     for (int j = 0; j < columnsCount; j++)
@@ -201,8 +201,7 @@ namespace Excel_Ayırma
                 }
                 for (int j = 0; j < dataTableList.Columns.Count; j++)
                 {
-                    range1 = (Range)worksheet.Cells[row, j + 1];
-                    range1.Cells[2, 1] = dataTableList.Rows[i][j].ToString();
+                    worksheet.Cells[row + 1, j + 1] = dataTableList.Rows[i][j].ToString();
                 }
                 row++;
             }
@@ -246,14 +245,15 @@ namespace Excel_Ayırma
                 }
 
                 String cellvalue = "";
-
+                MessageBox.Show("Girmeden önce:" + dataTableList.Rows.Count.ToString());
 
                 for (int j = 1; j < rowsCount; j++)
                 {
                     cellvalue = getReadCell(j, columncontrolnumber);
 
 
-                    if (cellvalue == getReadCell(j - 1, columncontrolnumber) || getReadCell(j - 1, columncontrolnumber) == "")
+                    if (cellvalue == getReadCell(j - 1, columncontrolnumber) || cellvalue == ""
+                        || getReadCell(j - 1, columncontrolnumber) == "")
                     {
 
                     }
@@ -266,17 +266,17 @@ namespace Excel_Ayırma
                     sayac++;
 
                 }
-                int row = 1;
+                MessageBox.Show("Girdikten sonra:" + dataTableList.Rows.Count.ToString());
                 for (int j = 0; j < dataTableList.Rows.Count; j++)
                 {
-
                     for (int k = 0; k < dataTableList.Columns.Count; k++)
                     {
-                        range1 = (Range)worksheet.Cells[row, k + 1];
-                        range1.Cells[2, 1] = dataTableList.Rows[j][k].ToString();
+                        //    range1 =  (Range)worksheet.Cells[j + 1, k + 1];
+                        //    range1.Cells[2, 1] = dataTableList.Rows[j][k].ToString();
+                        worksheet.Cells[j + 2, k + 1] = dataTableList.Rows[j][k].ToString();
                     }
-                    row++;
                 }
+                MessageBox.Show("Sayfa adı:" + sheetname.ToString() + "\nSayfadaki satır sayısı:" + rowsCount);
             }
         }
 
