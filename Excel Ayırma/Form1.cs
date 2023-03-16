@@ -77,6 +77,7 @@ namespace Excel_Ayırma
         private void testbtn_Click(object sender, EventArgs e)
         {
             excel.sheetRowSpace();
+            dataGridView1.DataSource = excel.getDataTable();
         }
 
         private void excelclosebtn_Click(object sender, EventArgs e)

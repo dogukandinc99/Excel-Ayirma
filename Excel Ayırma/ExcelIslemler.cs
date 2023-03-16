@@ -32,11 +32,9 @@ namespace Excel_Ayırma
         // Exceli açtıktan sonra başka işlemler için yeniden çağırmam gerektiğinden dolayı excelOpen methodundan ayırdım.
         void defaultValue()
         {
-            range = worksheet.UsedRange;
-            rowsCount = range.Rows.Count;
-            columnsCount = range.Columns.Count;
+            rowsCount = worksheet.UsedRange.Rows.Count;
+            columnsCount = worksheet.UsedRange.Columns.Count;
             dataTableList.Clear();
-            Array.Clear(dizi, 0, dizi.Length);
             dataTable();
         }
 
@@ -69,21 +67,17 @@ namespace Excel_Ayırma
                 {
                     for (int i = 0; i < columnsCount; i++)
                     {
-                        dataTableList.Columns.Add(getReadCell(0, i), typeof(string));
+                        dataTableList.Columns.Add(getReadCell(0, i));
                     }
                 }
-
-                String[] rows = new string[columnsCount];
-                String cellvalue = "";
-
-                for (int i = 1; i < rowsCount - 1; i++)
+                for (int i = 2; i < rowsCount + 1; i++)
                 {
-                    cellvalue = getReadCell(i, columncontrolnumber);
-                    for (int j = 0; j < columnsCount; j++)
+                    DataRow dataRow = dataTableList.NewRow();
+                    for (int j = 1; j < columnsCount; j++)
                     {
-                        rows[j] = getReadCell(i, j);
+                        dataRow[j - 1] = worksheet.Cells[i, j].Value;
                     }
-                    dataTableList.Rows.Add(rows);
+                    dataTableList.Rows.Add(dataRow);
                 }
             }
             catch (Exception e)
@@ -215,9 +209,10 @@ namespace Excel_Ayırma
             int sayac;
             for (int i = 1; i < workbook.Worksheets.Count; i++)
             {
-                sayac = 0;
                 worksheet = workbook.Worksheets[i];
-                defaultValue();
+                //dataTableList.Clear();
+                //dataTable();
+                sayac = 0;
                 sheetname = worksheet.Name;
                 switch (sheetname)
                 {
@@ -245,7 +240,6 @@ namespace Excel_Ayırma
                 }
 
                 String cellvalue = "";
-                MessageBox.Show("Girmeden önce:" + dataTableList.Rows.Count.ToString());
 
                 for (int j = 1; j < rowsCount; j++)
                 {
@@ -264,19 +258,14 @@ namespace Excel_Ayırma
 
                     }
                     sayac++;
-
                 }
-                MessageBox.Show("Girdikten sonra:" + dataTableList.Rows.Count.ToString());
                 for (int j = 0; j < dataTableList.Rows.Count; j++)
                 {
                     for (int k = 0; k < dataTableList.Columns.Count; k++)
                     {
-                        //    range1 =  (Range)worksheet.Cells[j + 1, k + 1];
-                        //    range1.Cells[2, 1] = dataTableList.Rows[j][k].ToString();
                         worksheet.Cells[j + 2, k + 1] = dataTableList.Rows[j][k].ToString();
                     }
                 }
-                MessageBox.Show("Sayfa adı:" + sheetname.ToString() + "\nSayfadaki satır sayısı:" + rowsCount);
             }
         }
 
