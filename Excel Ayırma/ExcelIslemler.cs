@@ -211,7 +211,7 @@ namespace Excel_Ayırma
             {
                 worksheet = workbook.Worksheets[i];
                 //dataTableList.Clear();
-                //dataTable();
+                //dataTable();1
                 sayac = 0;
                 sheetname = worksheet.Name;
                 switch (sheetname)
