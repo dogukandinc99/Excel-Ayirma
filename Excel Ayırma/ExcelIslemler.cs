@@ -71,6 +71,7 @@ namespace Excel_Ayırma
                         dataTableList.Columns.Add(getReadCell(0, i));
                     }
                 }
+                int kontrolsayac = 0;
                 for (int i = 2; i < rowsCount + 1; i++)
                 {
                     DataRow dataRow = dataTableList.NewRow();
@@ -79,7 +80,9 @@ namespace Excel_Ayırma
                         dataRow[j - 1] = worksheet.Cells[i, j].Value;
                     }
                     dataTableList.Rows.Add(dataRow);
+                    kontrolsayac++;
                 }
+                MessageBox.Show(kontrolsayac.ToString());
             }
             catch (Exception e)
             {
@@ -154,30 +157,26 @@ namespace Excel_Ayırma
                 else
                     break;
             }
-            int row = 1;
-            String control = dizi[0];
-            String sheetcellvalue = "";
-            for (int i = 0; i < dataTableList.Rows.Count; i++)
+
+            int row;
+            for (int i = 0; i < dizi.Length; i++)
             {
-                for (int k = 0; k < dizi.Length; k++)
+                if (dizi[i] != null)
                 {
-                    if (dataTableList.Rows[i][columncontrolnumber].ToString() == dizi[k] && dizi[k] != null && dataTableList.Rows[i][columncontrolnumber].ToString() != null)
+                    worksheet = workbook.Worksheets[sheetnamelenght(dizi[i]).ToString()];
+                    row = 1;
+                    for (int j = 0; j < dataTableList.Rows.Count; j++)
                     {
-                        sheetcellvalue = dizi[k];
-                        worksheet = workbook.Worksheets[sheetnamelenght(sheetcellvalue).ToString()];
-                        break;
+                        if (dataTableList.Rows[j][columncontrolnumber].ToString() == dizi[i])
+                        {
+                            for (int k = 0; k < dataTableList.Columns.Count; k++)
+                            {
+                                worksheet.Cells[row + 1, k + 1] = dataTableList.Rows[j][k];
+                            }
+                            row++;
+                        }
                     }
                 }
-                if (sheetcellvalue != control)
-                {
-                    control = sheetcellvalue;
-                    row = 1;
-                }
-                for (int j = 0; j < dataTableList.Columns.Count; j++)
-                {
-                    worksheet.Cells[row + 1, j + 1] = dataTableList.Rows[i][j].ToString();
-                }
-                row++;
             }
         }
 
@@ -206,8 +205,7 @@ namespace Excel_Ayırma
             for (int i = 1; i < workbook.Worksheets.Count; i++)
             {
                 worksheet = workbook.Worksheets[i];
-                dataTableList.Clear();
-                dataTable();
+                defaultValue();
                 sayac = 0;
                 sheetname = worksheet.Name;
                 switch (sheetname)
@@ -282,7 +280,7 @@ namespace Excel_Ayırma
         public void saveExcel(String adres, String filename)
         {
             newExcel(adres, filename);
-            //sheetRowSpace();
+            sheetRowSpace();
             workbook.SaveAs(@adres + @"\" + filename, _Excel.XlFileFormat.xlWorkbookNormal);
         }
 
