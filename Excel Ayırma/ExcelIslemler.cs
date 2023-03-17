@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using System.Data;
 using _Excel = Microsoft.Office.Interop.Excel;
 using Range = Microsoft.Office.Interop.Excel.Range;
 
@@ -89,6 +90,10 @@ namespace Excel_Ayırma
         }
 
 
+        // dataTableList nesnesini farklı yerlerde kullanabilmek için oluşturuldu.
+        public DataTable getDataTable() { return dataTableList; }
+
+
         // Sayfa oluşturmak için aynı değerleri teke indirip diziye ekliyor
         void sheetnamelist()
         {
@@ -130,31 +135,6 @@ namespace Excel_Ayırma
         }
 
 
-        // dataTableList nesnesini farklı yerlerde kullanabilmek için oluşturuldu.
-        public DataTable getDataTable() { return dataTableList; }
-
-
-        // Boş satır oluşturur.
-        DataRow emptyRowSpace()
-        {
-            DataRow dr = dataTableList.NewRow();
-            for (int j = 0; j < columnsCount; j++)
-            {
-                dr[j] = "";
-            }
-            return dr;
-        }
-
-
-        // Excel dosyasına yeni sayfa ekler.
-        void addworksheet(String sheetname)
-        {
-            _Excel.Sheets sheets = workbook.Worksheets;
-            var xlYeniSayfa = (_Excel.Worksheet)sheets.Add();
-            xlYeniSayfa.Name = sheetname.ToString();
-        }
-
-
         // dataTableList nesnesini yeni bir excele kaydeder.
         void newExcel(String adres, String filename)
         {
@@ -163,12 +143,12 @@ namespace Excel_Ayırma
             {
                 if (dizi[i] != null)
                 {
-                    addworksheet(sheetnamelenght(dizi[i].ToString()));
+                    worksheet = workbook.Worksheets.Add();
+                    worksheet.Name = sheetnamelenght(dizi[i].ToString());
                     worksheet = workbook.Worksheets[1];
                     for (int j = 0; j < dataTableList.Columns.Count; j++)
                     {
-                        range = (Range)worksheet.Cells[1, 1];
-                        range.Cells[1, j + 1] = dataTableList.Columns[j];
+                        worksheet.Cells[1, j + 1] = dataTableList.Columns[j].ColumnName.ToString();
                     }
                 }
                 else
@@ -202,6 +182,22 @@ namespace Excel_Ayırma
         }
 
 
+        // Sayfa adı uzun ise ilk 15 karakteri alıyor.
+        String sheetnamelenght(String value)
+        {
+            String control;
+            if (value.Length < 30)
+            {
+                control = value;
+            }
+            else
+            {
+                control = value.Substring(0, 15).ToString();
+            }
+            return control;
+        }
+
+
         // Kaydedilecek yeni excelde sayfa sayfa gezerek sütuna göre farklı olan satırların arasına boşluk bırakıp yeni excele aktarır.
         public void sheetRowSpace()
         {
@@ -210,8 +206,8 @@ namespace Excel_Ayırma
             for (int i = 1; i < workbook.Worksheets.Count; i++)
             {
                 worksheet = workbook.Worksheets[i];
-                //dataTableList.Clear();
-                //dataTable();1
+                dataTableList.Clear();
+                dataTable();
                 sayac = 0;
                 sheetname = worksheet.Name;
                 switch (sheetname)
@@ -270,28 +266,24 @@ namespace Excel_Ayırma
         }
 
 
+        // Boş satır oluşturur.
+        DataRow emptyRowSpace()
+        {
+            DataRow dr = dataTableList.NewRow();
+            for (int j = 0; j < columnsCount; j++)
+            {
+                dr[j] = "";
+            }
+            return dr;
+        }
+
+
         // Yeni exceli kaydeder.
         public void saveExcel(String adres, String filename)
         {
             newExcel(adres, filename);
-            sheetRowSpace();
+            //sheetRowSpace();
             workbook.SaveAs(@adres + @"\" + filename, _Excel.XlFileFormat.xlWorkbookNormal);
-        }
-
-
-        // Sayfa adı uzun ise ilk 15 karakteri alıyor.
-        String sheetnamelenght(String value)
-        {
-            String control;
-            if (value.Length < 30)
-            {
-                control = value;
-            }
-            else
-            {
-                control = value.Substring(0, 15).ToString();
-            }
-            return control;
         }
 
 
@@ -300,6 +292,7 @@ namespace Excel_Ayırma
         {
             workbook.Close();
             excel.Quit();
+
         }
     }
 }
