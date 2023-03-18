@@ -71,7 +71,6 @@ namespace Excel_Ayırma
                         dataTableList.Columns.Add(getReadCell(0, i));
                     }
                 }
-                int kontrolsayac = 0;
                 for (int i = 2; i < rowsCount + 1; i++)
                 {
                     DataRow dataRow = dataTableList.NewRow();
@@ -80,9 +79,7 @@ namespace Excel_Ayırma
                         dataRow[j - 1] = worksheet.Cells[i, j].Value;
                     }
                     dataTableList.Rows.Add(dataRow);
-                    kontrolsayac++;
                 }
-                MessageBox.Show(kontrolsayac.ToString());
             }
             catch (Exception e)
             {
@@ -234,11 +231,9 @@ namespace Excel_Ayırma
                 }
 
                 String cellvalue = "";
-
                 for (int j = 1; j < rowsCount; j++)
                 {
                     cellvalue = getReadCell(j, columncontrolnumber);
-
 
                     if (cellvalue == getReadCell(j - 1, columncontrolnumber) || cellvalue == ""
                         || getReadCell(j - 1, columncontrolnumber) == "")
@@ -249,7 +244,6 @@ namespace Excel_Ayırma
                     {
                         dataTableList.Rows.InsertAt(emptyRowSpace(), sayac);
                         sayac++;
-
                     }
                     sayac++;
                 }
@@ -282,6 +276,7 @@ namespace Excel_Ayırma
             newExcel(adres, filename);
             sheetRowSpace();
             workbook.SaveAs(@adres + @"\" + filename, _Excel.XlFileFormat.xlWorkbookNormal);
+            MessageBox.Show("Kayıt işlemi tamamlanmıştır.");
         }
 
 
