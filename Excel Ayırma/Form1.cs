@@ -51,7 +51,7 @@ namespace Excel_Ayırma
         private void cellvaluebtn_Click(object sender, EventArgs e)
         {
             listBox1.Items.Clear();
-            for (int i = 0; i < excel.dizi.Length; i++)
+            for (int i = 0; i < excel.dizi.Count; i++)
             {
                 if (excel.dizi[i] != null)
                 {
