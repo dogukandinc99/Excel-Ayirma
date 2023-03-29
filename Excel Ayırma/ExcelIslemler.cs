@@ -12,7 +12,7 @@ namespace Excel_Ayırma
 
         System.Data.DataTable dataTableList = new System.Data.DataTable("Excel-List");
 
-        public List<String> dizi;
+        public List<String> dizi = new List<string>();
         int columncontrolnumber = 8;
         int rowsCount = 0, columnsCount = 0;
 
