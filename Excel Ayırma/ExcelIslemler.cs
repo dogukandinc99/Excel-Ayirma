@@ -1,7 +1,6 @@
 ﻿using DocumentFormat.OpenXml.Spreadsheet;
 using System.Data;
 using _Excel = Microsoft.Office.Interop.Excel;
-using Range = Microsoft.Office.Interop.Excel.Range;
 
 namespace Excel_Ayırma
 {
@@ -10,14 +9,12 @@ namespace Excel_Ayırma
         _Excel.Application excel = new _Excel.Application();
         _Excel.Workbook workbook;
         _Excel.Worksheet worksheet;
-        Range range, range1;
-        int rowsCount = 0, columnsCount = 0;
 
         System.Data.DataTable dataTableList = new System.Data.DataTable("Excel-List");
 
         public String[] dizi = new String[10];
         int columncontrolnumber = 8;
-
+        int rowsCount = 0, columnsCount = 0;
 
         // Gelen adresdeki excel dosyasını açar ve dataTable methodunu çalıştırır. dataTable methodu çalıştıkdan sonra adresdeki exceli kapatır.
         public void excelOpen(String path)
@@ -285,7 +282,6 @@ namespace Excel_Ayırma
         {
             workbook.Close();
             excel.Quit();
-
         }
     }
 }
