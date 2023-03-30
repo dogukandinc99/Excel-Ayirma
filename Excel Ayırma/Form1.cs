@@ -37,11 +37,6 @@ namespace Excel_Ayırma
                     filesname.Add(ofd.SafeFileNames[i].ToString());
                     adresstxt.Text += adressfiles[i] + " ";
                 }
-                //cellvaluebtn.enabled = true;
-                //cellvaluetxt.enabled = true;
-                //saveselectedfolderbtn.enabled = true;
-                //listbtn.enabled = true;
-                //excelclosebtn.enabled = true;
             }
         }
 
