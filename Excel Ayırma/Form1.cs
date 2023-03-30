@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace Excel_Ayırma
 {
     public partial class Form1 : Form
@@ -5,7 +7,7 @@ namespace Excel_Ayırma
         OpenFileDialog ofd = new OpenFileDialog();
         FolderBrowserDialog fbd = new FolderBrowserDialog();
         ExcelIslemler excel = new ExcelIslemler();
-        String filepath = "", folderpatch = "";
+        String folderpatch = "";
 
         public Form1()
         {
@@ -24,18 +26,8 @@ namespace Excel_Ayırma
             ofd.Filter = "Excel Dosyası |*.xlsx; *.xls";
             ofd.FilterIndex = 1;
             ofd.RestoreDirectory = true;
-
-            if (ofd.ShowDialog() == DialogResult.OK)
-            {
-                filepath = ofd.FileName;
-                adresstxt.Text = filepath;
-                excel.excelOpen(filepath);
-                cellvaluebtn.Enabled = true;
-                cellvaluetxt.Enabled = true;
-                saveselectedfolderbtn.Enabled = true;
-                listbtn.Enabled = true;
-                excelclosebtn.Enabled = true;
-            }
+            ofd.Multiselect = true;
+            ofd.ShowDialog();
         }
 
         private void saveselectedfolderbtn_Click(object sender, EventArgs e)
@@ -71,7 +63,11 @@ namespace Excel_Ayırma
 
         private void saveexcelbtn_Click(object sender, EventArgs e)
         {
-            excel.saveExcel(saveadressfoldertxt.Text, cellvaluetxt.Text + "_" + ofd.SafeFileName.ToString());
+            for (int i = 0; i < ofd.FileNames.Length; i++)
+            {
+                excel.excelOpen(ofd.FileNames[i].ToString());
+                excel.saveExcel(saveadressfoldertxt.Text, cellvaluetxt.Text + "_" + ofd.SafeFileNames[i].ToString());
+            }
         }
 
         private void testbtn_Click(object sender, EventArgs e)

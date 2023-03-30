@@ -12,7 +12,7 @@ namespace Excel_Ayırma
 
         System.Data.DataTable dataTableList = new System.Data.DataTable("Excel-List");
 
-        public List<String> dizi;
+        public List<String> dizi = new List<string>();
         int columncontrolnumber = 8;
         int rowsCount = 0, columnsCount = 0;
 
@@ -22,6 +22,7 @@ namespace Excel_Ayırma
             workbook = excel.Workbooks.Open(path);
             worksheet = workbook.Worksheets[1];
             dizi.Clear();
+            columncontrolnumber = 8;
             defaultValue();
             sheetnamelist();
             excelquit();
@@ -119,7 +120,7 @@ namespace Excel_Ayırma
                         }
                         if (control == 0)
                         {
-                            dizi[sayac] = sheetname;
+                            dizi.Add(sheetname);
                             sayac += 1;
                         }
                         control = 0;
@@ -274,6 +275,7 @@ namespace Excel_Ayırma
             newExcel(adres, filename);
             sheetRowSpace();
             workbook.SaveAs(@adres + @"\" + filename, _Excel.XlFileFormat.xlWorkbookNormal);
+            excelquit();
             MessageBox.Show("Kayıt işlemi tamamlanmıştır.");
         }
 
