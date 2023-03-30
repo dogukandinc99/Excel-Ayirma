@@ -5,7 +5,7 @@ namespace Excel_Ayırma
         OpenFileDialog ofd = new OpenFileDialog();
         FolderBrowserDialog fbd = new FolderBrowserDialog();
         ExcelIslemler excel = new ExcelIslemler();
-        String filepath = "", folderpatch = "";
+        String folderpatch = "";
         List<string> adressfiles = new List<string>();
         List<string> filesname = new List<string>();
 
@@ -26,16 +26,17 @@ namespace Excel_Ayırma
             ofd.FilterIndex = 1;
             ofd.RestoreDirectory = true;
             ofd.Multiselect = true;
+            ofd.ShowDialog();
 
-            if (ofd.ShowDialog() == DialogResult.OK)
-            {
-                for (int i = 0; i < ofd.FileNames.Length; i++)
-                {
-                    adressfiles.Add(ofd.FileNames[i].ToString());
-                    filesname.Add(ofd.SafeFileNames[i].ToString());
-                    adresstxt.Text += adressfiles[i] + " ";
-                }
-            }
+            //if (ofd.ShowDialog() == DialogResult.OK)
+            //{
+            //    for (int i = 0; i < ofd.FileNames.Length; i++)
+            //    {
+            //        adressfiles.Add(ofd.FileNames[i].ToString());
+            //        filesname.Add(ofd.SafeFileNames[i].ToString());
+            //        adresstxt.Text += adressfiles[i] + " ";
+            //    }
+            //}
         }
 
         private void saveselectedfolderbtn_Click(object sender, EventArgs e)
@@ -71,7 +72,7 @@ namespace Excel_Ayırma
 
         private void saveexcelbtn_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < adressfiles.Count; i++)
+            for (int i = 0; i < ofd.FileNames.Length; i++)
             {
                 excel.excelOpen(ofd.FileNames[i].ToString());
                 excel.saveExcel(saveadressfoldertxt.Text, cellvaluetxt.Text + "_" + ofd.SafeFileNames[i].ToString());
