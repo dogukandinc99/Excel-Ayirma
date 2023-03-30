@@ -43,20 +43,16 @@ namespace Excel_Ayırma
         private void cellvaluebtn_Click(object sender, EventArgs e)
         {
             listBox1.Items.Clear();
-            //for (int i = 0; i < excel.dizi.Count; i++)
-            //{
-            //    if (excel.dizi[i] != null)
-            //    {
-            //        listBox1.Items.Add(excel.dizi[i].ToString());
-            //    }
-            //    else
-            //    {
-            //        break;
-            //    }
-            //}
-            foreach (var anahtar in excel.dict.Keys)// bunu gönder
+            for (int i = 0; i < excel.dizi.Count; i++)
             {
-                listBox1.Items.Add(anahtar);
+                if (excel.dizi[i] != null)
+                {
+                    listBox1.Items.Add(excel.dizi[i].ToString());
+                }
+                else
+                {
+                    break;
+                }
             }
 
         }
