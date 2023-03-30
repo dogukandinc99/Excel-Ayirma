@@ -1,5 +1,4 @@
-﻿using DocumentFormat.OpenXml.Spreadsheet;
-using System.Data;
+﻿using System.Data;
 using _Excel = Microsoft.Office.Interop.Excel;
 
 namespace Excel_Ayırma
@@ -13,15 +12,21 @@ namespace Excel_Ayırma
         System.Data.DataTable dataTableList = new System.Data.DataTable("Excel-List");
 
         public List<String> dizi = new List<string>();
+        public Dictionary<string, int> dict = new Dictionary<string, int>();
         int columncontrolnumber = 8;
         int rowsCount = 0, columnsCount = 0;
 
-        // Gelen adresdeki excel dosyasını açar ve dataTable methodunu çalıştırır. dataTable methodu çalıştıkdan sonra adresdeki exceli kapatır.
+        // Gelen adresdeki excel dosyasını açar ve dataTable methodunu çalıştırır.
+        // dataTable methodu çalıştıkdan sonra adresdeki exceli kapatır.
         public void excelOpen(String path)
         {
             workbook = excel.Workbooks.Open(path);
             worksheet = workbook.Worksheets[1];
+
+            //dizi List nesnesinin içini temizler.
             dizi.Clear();
+
+            //kontrol edilecek sütun
             columncontrolnumber = 8;
             defaultValue();
             sheetnamelist();
@@ -29,11 +34,14 @@ namespace Excel_Ayırma
         }
 
 
-        // Exceli açtıktan sonra başka işlemler için yeniden çağırmam gerektiğinden dolayı excelOpen methodundan ayırdım.
+        // Exceli açtıktan sonra başka işlemler için yeniden çağırmam gerektiğinden dolayı excelOpen methodunu oluşturduö.
         void defaultValue()
         {
+            //sayfadaki satır ve sütun sayısını değşkenlere aldım.
             rowsCount = worksheet.UsedRange.Rows.Count;
             columnsCount = worksheet.UsedRange.Columns.Count;
+
+            //dataTableList nesnesini temizler
             dataTableList.Clear();
             dataTable();
         }
@@ -70,6 +78,8 @@ namespace Excel_Ayırma
                         dataTableList.Columns.Add(getReadCell(0, i));
                     }
                 }
+
+                // dataTableList nesnesine exceldeki değerleri satır satır ekliyor.
                 for (int i = 2; i < rowsCount + 1; i++)
                 {
                     DataRow dataRow = dataTableList.NewRow();
@@ -96,36 +106,49 @@ namespace Excel_Ayırma
         // Sayfa oluşturmak için aynı değerleri teke indirip diziye ekliyor
         void sheetnamelist()
         {
+
+            _Excel.Range range = worksheet.UsedRange.Columns[columncontrolnumber + 1];
+
+            foreach (_Excel.Range cell in range.Cells)
+            {
+                string value = cell.Value2.ToString();
+                if (!dict.ContainsKey(value))
+                {
+                    dict.Add(value, 1);
+                }
+            }
+
+
+
             String cellvalue = "";
-            int sayac = 0, control = 0;
+            int control = 0;
             try
             {
-                for (int i = 1; i < rowsCount - 1; i++)
-                {
-                    cellvalue = getReadCell(i, columncontrolnumber);
+                //for (int i = 1; i < rowsCount - 1; i++)
+                //{
+                //    cellvalue = getReadCell(i, columncontrolnumber);
 
-                    if (cellvalue == getReadCell(i - 1, columncontrolnumber) || getReadCell(i - 1, columncontrolnumber) == "")
-                    {
+                //    if (cellvalue == getReadCell(i - 1, columncontrolnumber) || getReadCell(i - 1, columncontrolnumber) == "")
+                //    {
 
-                    }
-                    else
-                    {
-                        String sheetname = cellvalue;
-                        for (int j = 0; j < dizi.Count; j++)
-                        {
-                            if (dizi[j] == sheetname)
-                            {
-                                control++;
-                            }
-                        }
-                        if (control == 0)
-                        {
-                            dizi.Add(sheetname);
-                            sayac += 1;
-                        }
-                        control = 0;
-                    }
-                }
+                //    }
+                //    else
+                //    {
+                //        String sheetname = cellvalue;
+                //        for (int j = 0; j < dizi.Count; j++)
+                //        {
+                //            if (dizi[j] == sheetname)
+                //            {
+                //                control++;
+                //            }
+                //        }
+                //        if (control == 0)
+                //        {
+                //            dizi.Add(sheetname);
+                //        }
+                //        control = 0;
+                //    }
+                //}
             }
             catch (Exception e)
             {

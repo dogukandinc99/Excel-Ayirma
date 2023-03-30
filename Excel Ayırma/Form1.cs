@@ -43,17 +43,22 @@ namespace Excel_Ayırma
         private void cellvaluebtn_Click(object sender, EventArgs e)
         {
             listBox1.Items.Clear();
-            for (int i = 0; i < excel.dizi.Count; i++)
+            //for (int i = 0; i < excel.dizi.Count; i++)
+            //{
+            //    if (excel.dizi[i] != null)
+            //    {
+            //        listBox1.Items.Add(excel.dizi[i].ToString());
+            //    }
+            //    else
+            //    {
+            //        break;
+            //    }
+            //}
+            foreach (var anahtar in excel.dict.Keys)
             {
-                if (excel.dizi[i] != null)
-                {
-                    listBox1.Items.Add(excel.dizi[i].ToString());
-                }
-                else
-                {
-                    break;
-                }
+                listBox1.Items.Add(anahtar);
             }
+
         }
 
         private void listbtn_Click(object sender, EventArgs e)
@@ -65,8 +70,8 @@ namespace Excel_Ayırma
         {
             for (int i = 0; i < ofd.FileNames.Length; i++)
             {
-                excel.excelOpen(ofd.FileNames[i].ToString());
-                excel.saveExcel(saveadressfoldertxt.Text, cellvaluetxt.Text + "_" + ofd.SafeFileNames[i].ToString());
+                excel.excelOpen(ofd.FileNames[0].ToString());
+                //excel.saveExcel(saveadressfoldertxt.Text, cellvaluetxt.Text + "_" + ofd.SafeFileNames[i].ToString());
             }
         }
 
