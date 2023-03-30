@@ -27,16 +27,6 @@ namespace Excel_Ayırma
             ofd.RestoreDirectory = true;
             ofd.Multiselect = true;
             ofd.ShowDialog();
-
-            //if (ofd.ShowDialog() == DialogResult.OK)
-            //{
-            //    for (int i = 0; i < ofd.FileNames.Length; i++)
-            //    {
-            //        adressfiles.Add(ofd.FileNames[i].ToString());
-            //        filesname.Add(ofd.SafeFileNames[i].ToString());
-            //        adresstxt.Text += adressfiles[i] + " ";
-            //    }
-            //}
         }
 
         private void saveselectedfolderbtn_Click(object sender, EventArgs e)
