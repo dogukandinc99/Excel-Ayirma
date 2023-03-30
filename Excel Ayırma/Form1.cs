@@ -6,6 +6,8 @@ namespace Excel_Ayırma
         FolderBrowserDialog fbd = new FolderBrowserDialog();
         ExcelIslemler excel = new ExcelIslemler();
         String filepath = "", folderpatch = "";
+        List<string> adressfiles = new List<string>();
+        List<string> filesname = new List<string>();
 
         public Form1()
         {
@@ -20,21 +22,26 @@ namespace Excel_Ayırma
         private void fileselectbtn_Click(object sender, EventArgs e)
         {
 
+
             ofd.Title = "Excel Dosyası Seçiniz.";
             ofd.Filter = "Excel Dosyası |*.xlsx; *.xls";
             ofd.FilterIndex = 1;
             ofd.RestoreDirectory = true;
+            ofd.Multiselect = true;
 
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                filepath = ofd.FileName;
-                adresstxt.Text = filepath;
-                excel.excelOpen(filepath);
-                cellvaluebtn.Enabled = true;
-                cellvaluetxt.Enabled = true;
-                saveselectedfolderbtn.Enabled = true;
-                listbtn.Enabled = true;
-                excelclosebtn.Enabled = true;
+                for (int i = 0; i < ofd.FileNames.Length; i++)
+                {
+                    adressfiles.Add(ofd.FileNames[i].ToString());
+                    filesname.Add(ofd.SafeFileNames[i].ToString());
+                    adresstxt.Text += adressfiles[i] + " ";
+                }
+                //cellvaluebtn.enabled = true;
+                //cellvaluetxt.enabled = true;
+                //saveselectedfolderbtn.enabled = true;
+                //listbtn.enabled = true;
+                //excelclosebtn.enabled = true;
             }
         }
 
@@ -71,7 +78,12 @@ namespace Excel_Ayırma
 
         private void saveexcelbtn_Click(object sender, EventArgs e)
         {
-            excel.saveExcel(saveadressfoldertxt.Text, cellvaluetxt.Text + "_" + ofd.SafeFileName.ToString());
+            for (int i = 0; i < adressfiles.Count; i++)
+            {
+                excel.excelOpen(ofd.FileNames[i].ToString());
+                excel.saveExcel(saveadressfoldertxt.Text, cellvaluetxt.Text + "_" + ofd.SafeFileNames[i].ToString());
+            }
+
         }
 
         private void testbtn_Click(object sender, EventArgs e)

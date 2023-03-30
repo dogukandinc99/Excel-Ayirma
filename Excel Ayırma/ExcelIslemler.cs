@@ -1,5 +1,6 @@
 ﻿using DocumentFormat.OpenXml.Spreadsheet;
 using System.Data;
+using System.Diagnostics;
 using _Excel = Microsoft.Office.Interop.Excel;
 
 namespace Excel_Ayırma
@@ -21,6 +22,7 @@ namespace Excel_Ayırma
         {
             workbook = excel.Workbooks.Open(path);
             worksheet = workbook.Worksheets[1];
+            columncontrolnumber = 8;
             dizi.Clear();
             defaultValue();
             sheetnamelist();
@@ -31,6 +33,7 @@ namespace Excel_Ayırma
         // Exceli açtıktan sonra başka işlemler için yeniden çağırmam gerektiğinden dolayı excelOpen methodundan ayırdım.
         void defaultValue()
         {
+
             rowsCount = worksheet.UsedRange.Rows.Count;
             columnsCount = worksheet.UsedRange.Columns.Count;
             dataTableList.Clear();
@@ -78,6 +81,7 @@ namespace Excel_Ayırma
                     }
                     dataTableList.Rows.Add(dataRow);
                 }
+                Debug.Print("Aktarma Başarılı..................................................................................................");
             }
             catch (Exception e)
             {
@@ -95,8 +99,8 @@ namespace Excel_Ayırma
         // Sayfa oluşturmak için aynı değerleri teke indirip diziye ekliyor
         void sheetnamelist()
         {
-            String cellvalue = "";
-            int sayac = 0, control = 0;
+            String cellvalue;
+            int control = 0;
             try
             {
                 for (int i = 1; i < rowsCount - 1; i++)
@@ -119,8 +123,7 @@ namespace Excel_Ayırma
                         }
                         if (control == 0)
                         {
-                            dizi[sayac] = sheetname;
-                            sayac += 1;
+                            dizi.Add(sheetname);
                         }
                         control = 0;
                     }
