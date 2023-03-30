@@ -21,8 +21,6 @@ namespace Excel_Ayırma
         }
         private void fileselectbtn_Click(object sender, EventArgs e)
         {
-
-
             ofd.Title = "Excel Dosyası Seçiniz.";
             ofd.Filter = "Excel Dosyası |*.xlsx; *.xls";
             ofd.FilterIndex = 1;
