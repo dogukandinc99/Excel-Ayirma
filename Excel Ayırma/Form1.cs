@@ -54,7 +54,7 @@ namespace Excel_Ayırma
             //        break;
             //    }
             //}
-            foreach (var anahtar in excel.dict.Keys)// burada kaldın
+            foreach (var anahtar in excel.dict.Keys)
             {
                 listBox1.Items.Add(anahtar);
             }
