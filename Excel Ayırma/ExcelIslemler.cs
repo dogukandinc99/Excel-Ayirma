@@ -12,7 +12,7 @@ namespace Excel_Ayırma
 
         System.Data.DataTable dataTableList = new System.Data.DataTable("Excel-List");
 
-        public String[] dizi = new String[10];
+        public List<String> dizi;
         int columncontrolnumber = 8;
         int rowsCount = 0, columnsCount = 0;
 
@@ -21,6 +21,7 @@ namespace Excel_Ayırma
         {
             workbook = excel.Workbooks.Open(path);
             worksheet = workbook.Worksheets[1];
+            dizi.Clear();
             defaultValue();
             sheetnamelist();
             excelquit();
@@ -109,7 +110,7 @@ namespace Excel_Ayırma
                     else
                     {
                         String sheetname = cellvalue;
-                        for (int j = 0; j < dizi.Length; j++)
+                        for (int j = 0; j < dizi.Count; j++)
                         {
                             if (dizi[j] == sheetname)
                             {
@@ -136,7 +137,7 @@ namespace Excel_Ayırma
         void newExcel(String adres, String filename)
         {
             workbook = excel.Workbooks.Add(System.Reflection.Missing.Value);
-            for (int i = 0; i < dizi.Length; i++)
+            for (int i = 0; i < dizi.Count; i++)
             {
                 if (dizi[i] != null)
                 {
@@ -153,7 +154,7 @@ namespace Excel_Ayırma
             }
 
             int row;
-            for (int i = 0; i < dizi.Length; i++)
+            for (int i = 0; i < dizi.Count; i++)
             {
                 if (dizi[i] != null)
                 {
