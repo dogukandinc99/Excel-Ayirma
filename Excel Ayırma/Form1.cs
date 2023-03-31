@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace Excel_Ayırma
 {
     public partial class Form1 : Form
@@ -6,8 +8,6 @@ namespace Excel_Ayırma
         FolderBrowserDialog fbd = new FolderBrowserDialog();
         ExcelIslemler excel = new ExcelIslemler();
         String folderpatch = "";
-        List<string> adressfiles = new List<string>();
-        List<string> filesname = new List<string>();
 
         public Form1()
         {
@@ -42,17 +42,22 @@ namespace Excel_Ayırma
         private void cellvaluebtn_Click(object sender, EventArgs e)
         {
             listBox1.Items.Clear();
-            for (int i = 0; i < excel.dizi.Count; i++)
+            //for (int i = 0; i < excel.dizi.Count; i++)
+            //{
+            //    if (excel.dizi[i] != null)
+            //    {
+            //        listBox1.Items.Add(excel.dizi[i].ToString());
+            //    }
+            //    else
+            //    {
+            //        break;
+            //    }
+            //}
+            foreach (String cell in excel.dict.Keys)//
             {
-                if (excel.dizi[i] != null)
-                {
-                    listBox1.Items.Add(excel.dizi[i].ToString());
-                }
-                else
-                {
-                    break;
-                }
+                listBox1.Items.Add(cell.ToString());
             }
+
         }
 
         private void listbtn_Click(object sender, EventArgs e)
@@ -67,7 +72,7 @@ namespace Excel_Ayırma
                 excel.excelOpen(ofd.FileNames[i].ToString());
                 excel.saveExcel(saveadressfoldertxt.Text, cellvaluetxt.Text + "_" + ofd.SafeFileNames[i].ToString());
             }
-
+            MessageBox.Show("Kayıt işlemi tamamlanmıştır.");
         }
 
         private void testbtn_Click(object sender, EventArgs e)

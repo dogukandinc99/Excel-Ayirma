@@ -1,4 +1,4 @@
-﻿using DocumentFormat.OpenXml.Spreadsheet;
+﻿using DocumentFormat.OpenXml.Wordprocessing;
 using System.Data;
 using System.Diagnostics;
 using _Excel = Microsoft.Office.Interop.Excel;
@@ -13,29 +13,36 @@ namespace Excel_Ayırma
 
         System.Data.DataTable dataTableList = new System.Data.DataTable("Excel-List");
 
-        public List<String> dizi = new List<string>();
+        public Dictionary<string, int> dict = new Dictionary<string, int>();
         int columncontrolnumber = 8;
         int rowsCount = 0, columnsCount = 0;
 
-        // Gelen adresdeki excel dosyasını açar ve dataTable methodunu çalıştırır. dataTable methodu çalıştıkdan sonra adresdeki exceli kapatır.
+        // Gelen adresdeki excel dosyasını açar ve dataTable methodunu çalıştırır.
+        // dataTable methodu çalıştıkdan sonra adresdeki exceli kapatır.
         public void excelOpen(String path)
         {
             workbook = excel.Workbooks.Open(path);
             worksheet = workbook.Worksheets[1];
+
+            //dizi List nesnesinin içini temizler.
+            dict.Clear();
+
+            //kontrol edilecek sütun
             columncontrolnumber = 8;
-            dizi.Clear();
             defaultValue();
             sheetnamelist();
             excelquit();
         }
 
 
-        // Exceli açtıktan sonra başka işlemler için yeniden çağırmam gerektiğinden dolayı excelOpen methodundan ayırdım.
+        // Exceli açtıktan sonra başka işlemler için yeniden çağırmam gerektiğinden dolayı excelOpen methodunu oluşturduö.
         void defaultValue()
         {
-
+            //sayfadaki satır ve sütun sayısını değşkenlere aldım.
             rowsCount = worksheet.UsedRange.Rows.Count;
             columnsCount = worksheet.UsedRange.Columns.Count;
+
+            //dataTableList nesnesini temizler
             dataTableList.Clear();
             dataTable();
         }
@@ -72,6 +79,8 @@ namespace Excel_Ayırma
                         dataTableList.Columns.Add(getReadCell(0, i));
                     }
                 }
+
+                // dataTableList nesnesine exceldeki değerleri satır satır ekliyor.
                 for (int i = 2; i < rowsCount + 1; i++)
                 {
                     DataRow dataRow = dataTableList.NewRow();
@@ -99,35 +108,50 @@ namespace Excel_Ayırma
         // Sayfa oluşturmak için aynı değerleri teke indirip diziye ekliyor
         void sheetnamelist()
         {
-            String cellvalue;
+            _Excel.Range range = worksheet.UsedRange.Columns[columncontrolnumber + 1];
+
+            foreach (_Excel.Range cell in range.Cells)
+            {
+                if (cell.Value2 != null) // null değer kontrolü
+                {
+                    string value = cell.Value2.ToString();
+                    if (!dict.ContainsKey(value))
+                    {
+                        dict.Add(value, 1);
+                    }
+                }
+            }
+
+
+            String cellvalue = "";
             int control = 0;
             try
             {
-                for (int i = 1; i < rowsCount - 1; i++)
-                {
-                    cellvalue = getReadCell(i, columncontrolnumber);
+                //for (int i = 1; i < rowsCount - 1; i++)
+                //{
+                //    cellvalue = getReadCell(i, columncontrolnumber);
 
-                    if (cellvalue == getReadCell(i - 1, columncontrolnumber) || getReadCell(i - 1, columncontrolnumber) == "")
-                    {
+                //    if (cellvalue == getReadCell(i - 1, columncontrolnumber) || getReadCell(i - 1, columncontrolnumber) == "")
+                //    {
 
-                    }
-                    else
-                    {
-                        String sheetname = cellvalue;
-                        for (int j = 0; j < dizi.Count; j++)
-                        {
-                            if (dizi[j] == sheetname)
-                            {
-                                control++;
-                            }
-                        }
-                        if (control == 0)
-                        {
-                            dizi.Add(sheetname);
-                        }
-                        control = 0;
-                    }
-                }
+                //    }
+                //    else
+                //    {
+                //        String sheetname = cellvalue;
+                //        for (int j = 0; j < dizi.Count; j++)
+                //        {
+                //            if (dizi[j] == sheetname)
+                //            {
+                //                control++;
+                //            }
+                //        }
+                //        if (control == 0)
+                //        {
+                //            dizi.Add(sheetname);
+                //        }
+                //        control = 0;
+                //    }
+                //}
             }
             catch (Exception e)
             {
@@ -140,44 +164,32 @@ namespace Excel_Ayırma
         void newExcel(String adres, String filename)
         {
             workbook = excel.Workbooks.Add(System.Reflection.Missing.Value);
-            for (int i = 0; i < dizi.Count; i++)
+            foreach (String item in dict.Keys)
             {
-                if (dizi[i] != null)
+                // Yeni açılan excelde sayfalar oluşturur.
+                worksheet = workbook.Worksheets.Add();
+                worksheet.Name = sheetnamelenght(item.ToString());
+                worksheet = workbook.Worksheets[1];
+                for (int j = 0; j < dataTableList.Columns.Count; j++)
                 {
-                    worksheet = workbook.Worksheets.Add();
-                    worksheet.Name = sheetnamelenght(dizi[i].ToString());
-                    worksheet = workbook.Worksheets[1];
-                    for (int j = 0; j < dataTableList.Columns.Count; j++)
-                    {
-                        worksheet.Cells[1, j + 1] = dataTableList.Columns[j].ColumnName.ToString();
-                    }
+                    worksheet.Cells[1, j + 1] = dataTableList.Columns[j].ColumnName.ToString();
                 }
-                else
-                    break;
-            }
 
-            int row;
-            for (int i = 0; i < dizi.Count; i++)
-            {
-                if (dizi[i] != null)
+                // Açılan sayfanın ismine göre sayfanın içine satırları koyar
+                int row = 1;
+                for (int i = 0; i < dataTableList.Rows.Count; i++)
                 {
-                    worksheet = workbook.Worksheets[sheetnamelenght(dizi[i]).ToString()];
-                    row = 1;
-                    for (int j = 0; j < dataTableList.Rows.Count; j++)
+                    if (dataTableList.Rows[i][columncontrolnumber].ToString() == item.ToString())
                     {
-                        if (dataTableList.Rows[j][columncontrolnumber].ToString() == dizi[i])
+                        for (int j = 0; j < dataTableList.Columns.Count; j++)
                         {
-                            for (int k = 0; k < dataTableList.Columns.Count; k++)
-                            {
-                                worksheet.Cells[row + 1, k + 1] = dataTableList.Rows[j][k];
-                            }
-                            row++;
+                            worksheet.Cells[row + 1, j + 1] = dataTableList.Rows[i][j];
                         }
+                        row++;
                     }
                 }
             }
         }
-
 
         // Sayfa adı uzun ise ilk 15 karakteri alıyor.
         String sheetnamelenght(String value)
@@ -277,7 +289,8 @@ namespace Excel_Ayırma
             newExcel(adres, filename);
             sheetRowSpace();
             workbook.SaveAs(@adres + @"\" + filename, _Excel.XlFileFormat.xlWorkbookNormal);
-            MessageBox.Show("Kayıt işlemi tamamlanmıştır.");
+            excelquit();
+
         }
 
 

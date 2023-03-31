@@ -66,7 +66,6 @@
             // 
             // cellvaluebtn
             // 
-            cellvaluebtn.Enabled = false;
             cellvaluebtn.Location = new Point(566, 38);
             cellvaluebtn.Name = "cellvaluebtn";
             cellvaluebtn.Size = new Size(150, 23);
@@ -77,7 +76,6 @@
             // 
             // cellvaluetxt
             // 
-            cellvaluetxt.Enabled = false;
             cellvaluetxt.Location = new Point(12, 38);
             cellvaluetxt.Name = "cellvaluetxt";
             cellvaluetxt.Size = new Size(525, 23);
@@ -95,7 +93,6 @@
             // 
             // listbtn
             // 
-            listbtn.Enabled = false;
             listbtn.Location = new Point(722, 249);
             listbtn.Name = "listbtn";
             listbtn.Size = new Size(65, 92);
