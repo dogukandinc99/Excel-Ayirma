@@ -106,14 +106,17 @@ namespace Excel_Ayırma
         // Sayfa oluşturmak için aynı değerleri teke indirip diziye ekliyor
         void sheetnamelist()
         {
-           _Excel.Range range = worksheet.UsedRange.Columns[columncontrolnumber + 1];
+            _Excel.Range range = worksheet.UsedRange.Columns[columncontrolnumber + 1];
 
             foreach (_Excel.Range cell in range.Cells)
             {
-                string value = cell.Value2.ToString();
-                if (!dict.ContainsKey(value))
+                if (cell.Value2 != null) // null değer kontrolü
                 {
-                    dict.Add(value, 1);
+                    string value = cell.Value2.ToString();
+                    if (!dict.ContainsKey(value))
+                    {
+                        dict.Add(value, 1);
+                    }
                 }
             }
 
@@ -158,7 +161,7 @@ namespace Excel_Ayırma
         // dataTableList nesnesini yeni bir excele kaydeder.
         void newExcel(String adres, String filename)
         {
-            workbook = excel.Workbooks.Add(System.Reflection.Missing.Value);            
+            workbook = excel.Workbooks.Add(System.Reflection.Missing.Value);
             foreach (String item in dict.Keys)
             {
                 // Yeni açılan excelde sayfalar oluşturur.
@@ -285,7 +288,7 @@ namespace Excel_Ayırma
             sheetRowSpace();
             workbook.SaveAs(@adres + @"\" + filename, _Excel.XlFileFormat.xlWorkbookNormal);
             excelquit();
-            MessageBox.Show("Kayıt işlemi tamamlanmıştır.");
+
         }
 
 

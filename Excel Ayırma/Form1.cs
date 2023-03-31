@@ -73,6 +73,7 @@ namespace Excel_Ayırma
                 excel.excelOpen(ofd.FileNames[i].ToString());
                 excel.saveExcel(saveadressfoldertxt.Text, cellvaluetxt.Text + "_" + ofd.SafeFileNames[i].ToString());
             }
+            MessageBox.Show("Kayıt işlemi tamamlanmıştır.");
         }
 
         private void testbtn_Click(object sender, EventArgs e)
