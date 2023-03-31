@@ -53,7 +53,7 @@ namespace Excel_Ayırma
             //        break;
             //    }
             //}
-            foreach (String cell in excel.dict.Keys)
+            foreach (String cell in excel.dict.Keys)////
             {
                 listBox1.Items.Add(cell.ToString());
             }
