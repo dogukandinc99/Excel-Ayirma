@@ -70,8 +70,8 @@ namespace Excel_Ayırma
         {
             for (int i = 0; i < ofd.FileNames.Length; i++)
             {
-                excel.excelOpen(ofd.FileNames[0].ToString());
-                //excel.saveExcel(saveadressfoldertxt.Text, cellvaluetxt.Text + "_" + ofd.SafeFileNames[i].ToString());
+                excel.excelOpen(ofd.FileNames[i].ToString());
+                excel.saveExcel(saveadressfoldertxt.Text, cellvaluetxt.Text + "_" + ofd.SafeFileNames[i].ToString());
             }
         }
 

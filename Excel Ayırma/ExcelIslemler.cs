@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using DocumentFormat.OpenXml.Wordprocessing;
+using System.Data;
 using _Excel = Microsoft.Office.Interop.Excel;
 
 namespace Excel_Ayırma
@@ -11,7 +12,6 @@ namespace Excel_Ayırma
 
         System.Data.DataTable dataTableList = new System.Data.DataTable("Excel-List");
 
-        public List<String> dizi = new List<string>();
         public Dictionary<string, int> dict = new Dictionary<string, int>();
         int columncontrolnumber = 8;
         int rowsCount = 0, columnsCount = 0;
@@ -24,7 +24,7 @@ namespace Excel_Ayırma
             worksheet = workbook.Worksheets[1];
 
             //dizi List nesnesinin içini temizler.
-            dizi.Clear();
+            dict.Clear();
 
             //kontrol edilecek sütun
             columncontrolnumber = 8;
@@ -106,8 +106,7 @@ namespace Excel_Ayırma
         // Sayfa oluşturmak için aynı değerleri teke indirip diziye ekliyor
         void sheetnamelist()
         {
-
-            _Excel.Range range = worksheet.UsedRange.Columns[columncontrolnumber + 1];
+           _Excel.Range range = worksheet.UsedRange.Columns[columncontrolnumber + 1];
 
             foreach (_Excel.Range cell in range.Cells)
             {
@@ -117,7 +116,6 @@ namespace Excel_Ayırma
                     dict.Add(value, 1);
                 }
             }
-
 
 
             String cellvalue = "";
@@ -160,45 +158,33 @@ namespace Excel_Ayırma
         // dataTableList nesnesini yeni bir excele kaydeder.
         void newExcel(String adres, String filename)
         {
-            workbook = excel.Workbooks.Add(System.Reflection.Missing.Value);
-            for (int i = 0; i < dizi.Count; i++)
+            workbook = excel.Workbooks.Add(System.Reflection.Missing.Value);            
+            foreach (String item in dict.Keys)
             {
-                if (dizi[i] != null)
+                // Yeni açılan excelde sayfalar oluşturur.
+                worksheet = workbook.Worksheets.Add();
+                worksheet.Name = sheetnamelenght(item.ToString());
+                worksheet = workbook.Worksheets[1];
+                for (int j = 0; j < dataTableList.Columns.Count; j++)
                 {
-                    worksheet = workbook.Worksheets.Add();
-                    worksheet.Name = sheetnamelenght(dizi[i].ToString());
-                    worksheet = workbook.Worksheets[1];
-                    for (int j = 0; j < dataTableList.Columns.Count; j++)
-                    {
-                        worksheet.Cells[1, j + 1] = dataTableList.Columns[j].ColumnName.ToString();
-                    }
+                    worksheet.Cells[1, j + 1] = dataTableList.Columns[j].ColumnName.ToString();
                 }
-                else
-                    break;
-            }
 
-            int row;
-            for (int i = 0; i < dizi.Count; i++)
-            {
-                if (dizi[i] != null)
+                // Açılan sayfanın ismine göre sayfanın içine satırları koyar
+                int row = 1;
+                for (int i = 0; i < dataTableList.Rows.Count; i++)
                 {
-                    worksheet = workbook.Worksheets[sheetnamelenght(dizi[i]).ToString()];
-                    row = 1;
-                    for (int j = 0; j < dataTableList.Rows.Count; j++)
+                    if (dataTableList.Rows[i][columncontrolnumber].ToString() == item.ToString())
                     {
-                        if (dataTableList.Rows[j][columncontrolnumber].ToString() == dizi[i])
+                        for (int j = 0; j < dataTableList.Columns.Count; j++)
                         {
-                            for (int k = 0; k < dataTableList.Columns.Count; k++)
-                            {
-                                worksheet.Cells[row + 1, k + 1] = dataTableList.Rows[j][k];
-                            }
-                            row++;
+                            worksheet.Cells[row + 1, j + 1] = dataTableList.Rows[i][j];
                         }
+                        row++;
                     }
                 }
             }
         }
-
 
         // Sayfa adı uzun ise ilk 15 karakteri alıyor.
         String sheetnamelenght(String value)
