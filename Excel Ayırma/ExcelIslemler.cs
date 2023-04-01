@@ -290,7 +290,6 @@ namespace Excel_Ayırma
             sheetRowSpace();
             workbook.SaveAs(@adres + @"\" + filename, _Excel.XlFileFormat.xlWorkbookNormal);
             excelquit();
-
         }
 
 
