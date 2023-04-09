@@ -1,4 +1,5 @@
-﻿using DocumentFormat.OpenXml.Wordprocessing;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using DocumentFormat.OpenXml.Wordprocessing;
 using System.Data;
 using System.Diagnostics;
 using _Excel = Microsoft.Office.Interop.Excel;
@@ -108,54 +109,21 @@ namespace Excel_Ayırma
         // Sayfa oluşturmak için aynı değerleri teke indirip diziye ekliyor
         void sheetnamelist()
         {
-            _Excel.Range range = worksheet.UsedRange.Columns[columncontrolnumber + 1];
+            _Excel.Range range;
 
-            foreach (_Excel.Range cell in range.Cells)
+            for (int i = 2; i < worksheet.Rows.Count + 1; i++)
             {
-                if (cell.Value2 != null) // null değer kontrolü
+                range = worksheet.Cells[i, columncontrolnumber + 1];
+                if (range.Value != null) // null değer kontrolü
                 {
-                    string value = cell.Value2.ToString();
+                    string value = range.Value;
+                    Debug.Print(value.ToString());
                     if (!dict.ContainsKey(value))
                     {
                         dict.Add(value, 1);
                     }
                 }
-            }
-
-
-            String cellvalue = "";
-            int control = 0;
-            try
-            {
-                //for (int i = 1; i < rowsCount - 1; i++)
-                //{
-                //    cellvalue = getReadCell(i, columncontrolnumber);
-
-                //    if (cellvalue == getReadCell(i - 1, columncontrolnumber) || getReadCell(i - 1, columncontrolnumber) == "")
-                //    {
-
-                //    }
-                //    else
-                //    {
-                //        String sheetname = cellvalue;
-                //        for (int j = 0; j < dizi.Count; j++)
-                //        {
-                //            if (dizi[j] == sheetname)
-                //            {
-                //                control++;
-                //            }
-                //        }
-                //        if (control == 0)
-                //        {
-                //            dizi.Add(sheetname);
-                //        }
-                //        control = 0;
-                //    }
-                //}
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("hata mesajı:" + e.ToString());
+                else break;
             }
         }
 
@@ -189,7 +157,10 @@ namespace Excel_Ayırma
                     }
                 }
             }
+            worksheet = workbook.Worksheets[workbook.Worksheets.Count];
+            worksheet.Delete();
         }
+
 
         // Sayfa adı uzun ise ilk 15 karakteri alıyor.
         String sheetnamelenght(String value)
