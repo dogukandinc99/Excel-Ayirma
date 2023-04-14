@@ -46,7 +46,6 @@ namespace Excel_Ayırma
             {
                 listBox1.Items.Add(cell.ToString());
             }
-
         }
 
         private void listbtn_Click(object sender, EventArgs e)
