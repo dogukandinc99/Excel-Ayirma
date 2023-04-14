@@ -17,7 +17,6 @@ namespace Excel_Ayırma
         public Dictionary<string, int> dict = new Dictionary<string, int>();
         int columncontrolnumber = 8;
         int rowsCount = 0, columnsCount = 0;
-        String deneme = "";
 
         // Gelen adresdeki excel dosyasını açar ve dataTable methodunu çalıştırır.
         // dataTable methodu çalıştıkdan sonra adresdeki exceli kapatır.

@@ -42,18 +42,7 @@ namespace Excel_Ayırma
         private void cellvaluebtn_Click(object sender, EventArgs e)
         {
             listBox1.Items.Clear();
-            //for (int i = 0; i < excel.dizi.Count; i++)
-            //{
-            //    if (excel.dizi[i] != null)
-            //    {
-            //        listBox1.Items.Add(excel.dizi[i].ToString());
-            //    }
-            //    else
-            //    {
-            //        break;
-            //    }
-            //}
-            foreach (String cell in excel.dict.Keys)////
+            foreach (String cell in excel.dict.Keys)
             {
                 listBox1.Items.Add(cell.ToString());
             }

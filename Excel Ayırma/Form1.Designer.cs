@@ -41,7 +41,6 @@
             saveselectedfolderbtn = new Button();
             saveexcelbtn = new Button();
             numericUpDown1 = new NumericUpDown();
-            testbtn = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             SuspendLayout();
@@ -165,22 +164,11 @@
             numericUpDown1.TabIndex = 12;
             numericUpDown1.Value = new decimal(new int[] { 3, 0, 0, 0 });
             // 
-            // testbtn
-            // 
-            testbtn.Location = new Point(722, 196);
-            testbtn.Name = "testbtn";
-            testbtn.Size = new Size(65, 44);
-            testbtn.TabIndex = 13;
-            testbtn.Text = "Test";
-            testbtn.UseVisualStyleBackColor = true;
-            testbtn.Click += testbtn_Click;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(798, 395);
-            Controls.Add(testbtn);
             Controls.Add(numericUpDown1);
             Controls.Add(saveexcelbtn);
             Controls.Add(saveselectedfolderbtn);
@@ -217,6 +205,5 @@
         private Button saveselectedfolderbtn;
         private Button saveexcelbtn;
         private NumericUpDown numericUpDown1;
-        private Button testbtn;
     }
 }
