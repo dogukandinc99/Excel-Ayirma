@@ -182,12 +182,11 @@ namespace Excel_Ayırma
         public void sheetRowSpace()
         {
             String sheetname = "";
-            int sayac;
-            for (int i = 1; i < workbook.Worksheets.Count; i++)
+            for (int i = 1; i <= workbook.Worksheets.Count; i++)
             {
                 worksheet = workbook.Worksheets[i];
                 defaultValue();
-                sayac = 0;
+
                 sheetname = worksheet.Name;
                 switch (sheetname)
                 {
@@ -209,28 +208,37 @@ namespace Excel_Ayırma
                     case "TEKNIK BILGI ISLEM":
                         columncontrolnumber = 11;
                         break;
+                    case "GENEL ARŞİV (AJ":
+                        columncontrolnumber = 12;
+                        break;
                     default:
                         columncontrolnumber = 8;
                         break;
                 }
 
-                String cellvalue = "";
-                for (int j = 1; j < rowsCount; j++)
+                DataView dataView = dataTableList.DefaultView;
+                dataView.Sort = dataTableList.Columns[columncontrolnumber].ColumnName + " ASC";
+                dataTableList = dataView.ToTable();
+
+                string prevValue = null;
+                for (int j = 0; j < dataTableList.Rows.Count; j++)
                 {
-                    cellvalue = getReadCell(j, columncontrolnumber);
+                    string currentValue = dataTableList.Rows[j][columncontrolnumber].ToString();
 
-                    if (cellvalue == getReadCell(j - 1, columncontrolnumber) || cellvalue == ""
-                        || getReadCell(j - 1, columncontrolnumber) == "")
+                    if (string.IsNullOrEmpty(currentValue))
                     {
+                        continue;
+                    }
 
-                    }
-                    else
+                    if (prevValue == currentValue)
                     {
-                        dataTableList.Rows.InsertAt(emptyRowSpace(), sayac);
-                        sayac++;
+                        continue;
                     }
-                    sayac++;
+
+                    dataTableList.Rows.InsertAt(emptyRowSpace(), j);
+                    prevValue = currentValue;
                 }
+
                 for (int j = 0; j < dataTableList.Rows.Count; j++)
                 {
                     for (int k = 0; k < dataTableList.Columns.Count; k++)
