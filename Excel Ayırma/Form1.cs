@@ -55,6 +55,8 @@ namespace Excel_Ayırma
 
         private void saveexcelbtn_Click(object sender, EventArgs e)
         {
+            //deneme
+            Debug.Print("deneme");
             for (int i = 0; i < ofd.FileNames.Length; i++)
             {
                 excel.excelOpen(ofd.FileNames[i].ToString());
