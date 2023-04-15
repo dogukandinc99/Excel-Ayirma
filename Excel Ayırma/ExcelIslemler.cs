@@ -91,7 +91,7 @@ namespace Excel_Ayırma
                     }
                     dataTableList.Rows.Add(dataRow);
                 }
-                Debug.Print("Aktarma Başarılı..................................................................................................");
+                Debug.Print("DataTable nesnesine aktarma başarılı...");
             }
             catch (Exception e)
             {
@@ -111,6 +111,7 @@ namespace Excel_Ayırma
         {
             _Excel.Range range;
 
+            Debug.Print("Sayfa isimleri alınıyor...");
             for (int i = 2; i < worksheet.Rows.Count + 1; i++)
             {
                 range = worksheet.Cells[i, columncontrolnumber + 1];
@@ -125,6 +126,7 @@ namespace Excel_Ayırma
                 }
                 else break;
             }
+            
         }
 
 
@@ -138,11 +140,13 @@ namespace Excel_Ayırma
                 worksheet = workbook.Worksheets.Add();
                 worksheet.Name = sheetnamelenght(item.ToString());
                 worksheet = workbook.Worksheets[1];
+
+                Debug.Print("Sayfalar oluşturuluyor...");
                 for (int j = 0; j < dataTableList.Columns.Count; j++)
                 {
                     worksheet.Cells[1, j + 1] = dataTableList.Columns[j].ColumnName.ToString();
                 }
-
+               
                 // Açılan sayfanın ismine göre sayfanın içine satırları koyar
                 int row = 1;
                 for (int i = 0; i < dataTableList.Rows.Count; i++)
@@ -216,10 +220,13 @@ namespace Excel_Ayırma
                         break;
                 }
 
+                Debug.Print("Sıralama yapılıyor...");
                 DataView dataView = dataTableList.DefaultView;
                 dataView.Sort = dataTableList.Columns[columncontrolnumber].ColumnName + " ASC";
                 dataTableList = dataView.ToTable();
+                
 
+                Debug.Print("Farklı olan satırlar ayrılıyor...");
                 string prevValue = null;
                 for (int j = 0; j < dataTableList.Rows.Count; j++)
                 {
@@ -238,7 +245,7 @@ namespace Excel_Ayırma
                     dataTableList.Rows.InsertAt(emptyRowSpace(), j);
                     prevValue = currentValue;
                 }
-
+                
                 for (int j = 0; j < dataTableList.Rows.Count; j++)
                 {
                     for (int k = 0; k < dataTableList.Columns.Count; k++)
