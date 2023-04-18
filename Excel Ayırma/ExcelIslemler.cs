@@ -42,7 +42,7 @@ namespace Excel_Ayırma
             //sayfadaki satır ve sütun sayısını değşkenlere aldım.
             rowsCount = worksheet.UsedRange.Rows.Count;
             columnsCount = worksheet.UsedRange.Columns.Count;
-
+            
             //dataTableList nesnesini temizler
             dataTableList.Clear();
             dataTable();
@@ -126,7 +126,7 @@ namespace Excel_Ayırma
                 }
                 else break;
             }
-            
+
         }
 
 
@@ -146,7 +146,7 @@ namespace Excel_Ayırma
                 {
                     worksheet.Cells[1, j + 1] = dataTableList.Columns[j].ColumnName.ToString();
                 }
-               
+
                 // Açılan sayfanın ismine göre sayfanın içine satırları koyar
                 int row = 1;
                 for (int i = 0; i < dataTableList.Rows.Count; i++)
@@ -224,7 +224,7 @@ namespace Excel_Ayırma
                 DataView dataView = dataTableList.DefaultView;
                 dataView.Sort = dataTableList.Columns[columncontrolnumber].ColumnName + " ASC";
                 dataTableList = dataView.ToTable();
-                
+
 
                 Debug.Print("Farklı olan satırlar ayrılıyor...");
                 string prevValue = null;
@@ -245,7 +245,7 @@ namespace Excel_Ayırma
                     dataTableList.Rows.InsertAt(emptyRowSpace(), j);
                     prevValue = currentValue;
                 }
-                
+
                 for (int j = 0; j < dataTableList.Rows.Count; j++)
                 {
                     for (int k = 0; k < dataTableList.Columns.Count; k++)

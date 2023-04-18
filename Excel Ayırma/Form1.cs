@@ -14,11 +14,19 @@ namespace Excel_Ayırma
             InitializeComponent();
         }
 
-        void progressbarfill(ProgressBar progressBar, int min, int max)
+        public void progressbarMax(int max)
         {
-            progressBar.Minimum = min;
-            progressBar.Maximum = max;
+            progressBar1.Maximum = max;
         }
+        public void progressbarFill()
+        {
+            progressBar1.Value += 1;
+        }
+        public void progressbarClear()
+        {
+            progressBar1.Value = 0;
+        }
+
         private void fileselectbtn_Click(object sender, EventArgs e)
         {
             ofd.Title = "Excel Dosyası Seçiniz.";
