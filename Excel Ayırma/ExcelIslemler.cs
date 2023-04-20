@@ -42,28 +42,10 @@ namespace Excel_Ayırma
             //sayfadaki satır ve sütun sayısını değşkenlere aldım.
             rowsCount = worksheet.UsedRange.Rows.Count;
             columnsCount = worksheet.UsedRange.Columns.Count;
-            
+
             //dataTableList nesnesini temizler
             dataTableList.Clear();
             dataTable();
-        }
-
-
-        // Exceldeki hücreyi getirir. Eğer hücre boş ise geriye "Empty" değerini dönderir.
-        String getReadCell(int i, int j)
-        {
-            string value;
-            i++;
-            j++;
-            if (worksheet.Cells[i, j].Value2 != null)
-            {
-                value = worksheet.Cells[i, j].Value2.ToString();
-            }
-            else
-            {
-                value = "Empty";
-            }
-            return value;
         }
 
 
@@ -77,7 +59,7 @@ namespace Excel_Ayırma
                 {
                     for (int i = 0; i < columnsCount; i++)
                     {
-                        dataTableList.Columns.Add(getReadCell(0, i));
+                        dataTableList.Columns.Add(worksheet.Cells[1, i + 1].Value2.ToString());
                     }
                 }
 
@@ -126,7 +108,6 @@ namespace Excel_Ayırma
                 }
                 else break;
             }
-
         }
 
 
@@ -170,13 +151,13 @@ namespace Excel_Ayırma
         String sheetnamelenght(String value)
         {
             String control;
-            if (value.Length < 30)
+            if (value.Length < 32)
             {
                 control = value;
             }
             else
             {
-                control = value.Substring(0, 15).ToString();
+                control = value.Substring(0, 31).ToString();
             }
             return control;
         }
@@ -212,7 +193,7 @@ namespace Excel_Ayırma
                     case "TEKNIK BILGI ISLEM":
                         columncontrolnumber = 11;
                         break;
-                    case "GENEL ARŞİV (AJ":
+                    case "GENEL ARŞİV (AJANSLAR -İNGESTLE":
                         columncontrolnumber = 12;
                         break;
                     default:
@@ -224,7 +205,6 @@ namespace Excel_Ayırma
                 DataView dataView = dataTableList.DefaultView;
                 dataView.Sort = dataTableList.Columns[columncontrolnumber].ColumnName + " ASC";
                 dataTableList = dataView.ToTable();
-
 
                 Debug.Print("Farklı olan satırlar ayrılıyor...");
                 string prevValue = null;

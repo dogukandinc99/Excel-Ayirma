@@ -35,6 +35,7 @@ namespace Excel_Ayırma
             ofd.RestoreDirectory = true;
             ofd.Multiselect = true;
             ofd.ShowDialog();
+            adresstxt.Text = ofd.FileName;
         }
 
         private void saveselectedfolderbtn_Click(object sender, EventArgs e)
@@ -47,48 +48,16 @@ namespace Excel_Ayırma
             }
         }
 
-        private void cellvaluebtn_Click(object sender, EventArgs e)
-        {
-            listBox1.Items.Clear();
-            foreach (String cell in excel.dict.Keys)
-            {
-                listBox1.Items.Add(cell.ToString());
-            }
-        }
-
-        private void listbtn_Click(object sender, EventArgs e)
-        {
-            dataGridView1.DataSource = excel.getDataTable();
-        }
-
         private void saveexcelbtn_Click(object sender, EventArgs e)
         {
-            //deneme
-            Debug.Print("deneme");
             for (int i = 0; i < ofd.FileNames.Length; i++)
             {
                 excel.excelOpen(ofd.FileNames[i].ToString());
+                dataGridView1.DataSource = excel.getDataTable();
                 excel.saveExcel(saveadressfoldertxt.Text, cellvaluetxt.Text + "_" + ofd.SafeFileNames[i].ToString());
-                Debug.Print((i + 1) + ". kayıt aktarımı tamamlandı................................................");
+                Debug.Print((i + 1) + " kayıdın aktarımı tamamlandı................................................");
             }
             MessageBox.Show("Kayıt işlemi tamamlanmıştır.");
-        }
-
-        private void testbtn_Click(object sender, EventArgs e)
-        {
-            excel.sheetRowSpace();
-            dataGridView1.DataSource = excel.getDataTable();
-        }
-
-        private void excelclosebtn_Click(object sender, EventArgs e)
-        {
-            excel.excelquit();
-            fileselectbtn.Enabled = true;
-            cellvaluebtn.Enabled = false;
-            cellvaluetxt.Enabled = false;
-            listbtn.Enabled = false;
-            saveselectedfolderbtn.Enabled = false;
-            saveexcelbtn.Enabled = false;
         }
     }
 }

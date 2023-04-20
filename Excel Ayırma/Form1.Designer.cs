@@ -30,162 +30,136 @@
         {
             fileselectbtn = new Button();
             adresstxt = new TextBox();
-            cellvaluebtn = new Button();
             cellvaluetxt = new TextBox();
             dataGridView1 = new DataGridView();
-            listbtn = new Button();
             progressBar1 = new ProgressBar();
-            listBox1 = new ListBox();
-            excelclosebtn = new Button();
             saveadressfoldertxt = new TextBox();
             saveselectedfolderbtn = new Button();
             saveexcelbtn = new Button();
-            numericUpDown1 = new NumericUpDown();
+            label1 = new Label();
+            label2 = new Label();
+            label3 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             SuspendLayout();
             // 
             // fileselectbtn
             // 
-            fileselectbtn.Location = new Point(566, 9);
+            fileselectbtn.Location = new Point(566, 12);
             fileselectbtn.Name = "fileselectbtn";
-            fileselectbtn.Size = new Size(150, 23);
+            fileselectbtn.Size = new Size(149, 32);
             fileselectbtn.TabIndex = 0;
-            fileselectbtn.Text = "Dosya Seç";
+            fileselectbtn.Tag = "";
+            fileselectbtn.Text = "DOSYA SEÇ";
             fileselectbtn.UseVisualStyleBackColor = true;
             fileselectbtn.Click += fileselectbtn_Click;
             // 
             // adresstxt
             // 
             adresstxt.Enabled = false;
-            adresstxt.Location = new Point(12, 9);
+            adresstxt.Location = new Point(148, 9);
             adresstxt.Name = "adresstxt";
-            adresstxt.Size = new Size(525, 23);
+            adresstxt.Size = new Size(389, 23);
             adresstxt.TabIndex = 1;
-            // 
-            // cellvaluebtn
-            // 
-            cellvaluebtn.Location = new Point(566, 38);
-            cellvaluebtn.Name = "cellvaluebtn";
-            cellvaluebtn.Size = new Size(150, 23);
-            cellvaluebtn.TabIndex = 2;
-            cellvaluebtn.Text = "Hücreyi getir";
-            cellvaluebtn.UseVisualStyleBackColor = true;
-            cellvaluebtn.Click += cellvaluebtn_Click;
             // 
             // cellvaluetxt
             // 
-            cellvaluetxt.Location = new Point(12, 38);
+            cellvaluetxt.Location = new Point(148, 67);
             cellvaluetxt.Name = "cellvaluetxt";
-            cellvaluetxt.Size = new Size(525, 23);
+            cellvaluetxt.Size = new Size(389, 23);
             cellvaluetxt.TabIndex = 3;
             cellvaluetxt.Text = "1-15";
             // 
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(12, 94);
+            dataGridView1.Location = new Point(11, 125);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowTemplate.Height = 25;
-            dataGridView1.Size = new Size(525, 247);
+            dataGridView1.Size = new Size(704, 240);
             dataGridView1.TabIndex = 4;
-            // 
-            // listbtn
-            // 
-            listbtn.Location = new Point(722, 249);
-            listbtn.Name = "listbtn";
-            listbtn.Size = new Size(65, 92);
-            listbtn.TabIndex = 5;
-            listbtn.Text = "Listele";
-            listbtn.UseVisualStyleBackColor = true;
-            listbtn.Click += listbtn_Click;
             // 
             // progressBar1
             // 
-            progressBar1.Location = new Point(12, 357);
+            progressBar1.Location = new Point(12, 96);
             progressBar1.Maximum = 10000;
             progressBar1.Name = "progressBar1";
-            progressBar1.Size = new Size(705, 23);
+            progressBar1.Size = new Size(525, 23);
             progressBar1.TabIndex = 6;
-            // 
-            // listBox1
-            // 
-            listBox1.FormattingEnabled = true;
-            listBox1.ItemHeight = 15;
-            listBox1.Location = new Point(566, 95);
-            listBox1.Name = "listBox1";
-            listBox1.Size = new Size(150, 244);
-            listBox1.TabIndex = 7;
-            // 
-            // excelclosebtn
-            // 
-            excelclosebtn.Enabled = false;
-            excelclosebtn.Location = new Point(722, 8);
-            excelclosebtn.Name = "excelclosebtn";
-            excelclosebtn.Size = new Size(65, 79);
-            excelclosebtn.TabIndex = 8;
-            excelclosebtn.Text = "Exceli Kapat";
-            excelclosebtn.UseVisualStyleBackColor = true;
-            excelclosebtn.Click += excelclosebtn_Click;
             // 
             // saveadressfoldertxt
             // 
             saveadressfoldertxt.Enabled = false;
-            saveadressfoldertxt.Location = new Point(12, 67);
+            saveadressfoldertxt.Location = new Point(148, 38);
             saveadressfoldertxt.Name = "saveadressfoldertxt";
-            saveadressfoldertxt.Size = new Size(525, 23);
+            saveadressfoldertxt.Size = new Size(389, 23);
             saveadressfoldertxt.TabIndex = 9;
             // 
             // saveselectedfolderbtn
             // 
-            saveselectedfolderbtn.Location = new Point(566, 68);
+            saveselectedfolderbtn.Location = new Point(566, 50);
             saveselectedfolderbtn.Name = "saveselectedfolderbtn";
-            saveselectedfolderbtn.Size = new Size(150, 23);
+            saveselectedfolderbtn.Size = new Size(149, 32);
             saveselectedfolderbtn.TabIndex = 10;
-            saveselectedfolderbtn.Text = "Kaydedilecek Dizin";
+            saveselectedfolderbtn.Text = "KAYDEDİLECEK DİZİN";
             saveselectedfolderbtn.UseVisualStyleBackColor = true;
             saveselectedfolderbtn.Click += saveselectedfolderbtn_Click;
             // 
             // saveexcelbtn
             // 
-            saveexcelbtn.Location = new Point(722, 95);
+            saveexcelbtn.Location = new Point(566, 88);
             saveexcelbtn.Name = "saveexcelbtn";
-            saveexcelbtn.Size = new Size(65, 95);
+            saveexcelbtn.Size = new Size(149, 32);
             saveexcelbtn.TabIndex = 11;
-            saveexcelbtn.Text = "Kaydet";
+            saveexcelbtn.Text = "KAYDET";
             saveexcelbtn.UseVisualStyleBackColor = true;
             saveexcelbtn.Click += saveexcelbtn_Click;
             // 
-            // numericUpDown1
+            // label1
             // 
-            numericUpDown1.Location = new Point(725, 357);
-            numericUpDown1.Name = "numericUpDown1";
-            numericUpDown1.Size = new Size(62, 23);
-            numericUpDown1.TabIndex = 12;
-            numericUpDown1.Value = new decimal(new int[] { 3, 0, 0, 0 });
+            label1.AutoSize = true;
+            label1.Location = new Point(54, 12);
+            label1.Name = "label1";
+            label1.Size = new Size(88, 15);
+            label1.TabIndex = 12;
+            label1.Text = "DOSYA ADRESİ:";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(15, 41);
+            label2.Name = "label2";
+            label2.Size = new Size(127, 15);
+            label2.TabIndex = 12;
+            label2.Text = "KAYDEDİLECEK ADRES:";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(73, 70);
+            label3.Name = "label3";
+            label3.Size = new Size(69, 15);
+            label3.TabIndex = 12;
+            label3.Text = "DOSYA ADI:";
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(798, 395);
-            Controls.Add(numericUpDown1);
+            ClientSize = new Size(727, 377);
+            Controls.Add(label3);
+            Controls.Add(label2);
+            Controls.Add(label1);
             Controls.Add(saveexcelbtn);
             Controls.Add(saveselectedfolderbtn);
             Controls.Add(saveadressfoldertxt);
-            Controls.Add(excelclosebtn);
-            Controls.Add(listBox1);
             Controls.Add(progressBar1);
-            Controls.Add(listbtn);
             Controls.Add(dataGridView1);
             Controls.Add(cellvaluetxt);
-            Controls.Add(cellvaluebtn);
             Controls.Add(adresstxt);
             Controls.Add(fileselectbtn);
             Name = "Form1";
             Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -194,16 +168,14 @@
 
         private Button fileselectbtn;
         private TextBox adresstxt;
-        private Button cellvaluebtn;
         private TextBox cellvaluetxt;
         private DataGridView dataGridView1;
-        private Button listbtn;
         private ProgressBar progressBar1;
-        private ListBox listBox1;
-        private Button excelclosebtn;
         private TextBox saveadressfoldertxt;
         private Button saveselectedfolderbtn;
         private Button saveexcelbtn;
-        private NumericUpDown numericUpDown1;
+        private Label label1;
+        private Label label2;
+        private Label label3;
     }
 }
