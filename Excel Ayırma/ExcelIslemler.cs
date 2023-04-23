@@ -1,8 +1,7 @@
-﻿using DocumentFormat.OpenXml.Spreadsheet;
-using DocumentFormat.OpenXml.Wordprocessing;
-using System.Data;
+﻿using System.Data;
 using System.Diagnostics;
 using _Excel = Microsoft.Office.Interop.Excel;
+using System.Windows.Forms;
 
 namespace Excel_Ayırma
 {
@@ -17,6 +16,14 @@ namespace Excel_Ayırma
         public Dictionary<string, int> dict = new Dictionary<string, int>();
         int columncontrolnumber = 8;
         int rowsCount = 0, columnsCount = 0;
+        ProgressBar progress;
+        Label label1;
+
+        public ExcelIslemler(ProgressBar progress, Label label)
+        {
+            this.progress = progress;
+            this.label1 = label;
+        }
 
         // Gelen adresdeki excel dosyasını açar ve dataTable methodunu çalıştırır.
         // dataTable methodu çalıştıkdan sonra adresdeki exceli kapatır.
@@ -42,6 +49,10 @@ namespace Excel_Ayırma
             //sayfadaki satır ve sütun sayısını değşkenlere aldım.
             rowsCount = worksheet.UsedRange.Rows.Count;
             columnsCount = worksheet.UsedRange.Columns.Count;
+
+            progress.Minimum = 0;
+            progress.Maximum = rowsCount - 1;
+            progress.Value = 0;
 
             //dataTableList nesnesini temizler
             dataTableList.Clear();
@@ -72,6 +83,8 @@ namespace Excel_Ayırma
                         dataRow[j - 1] = worksheet.Cells[i, j].Value;
                     }
                     dataTableList.Rows.Add(dataRow);
+                    progress.Value += 1;
+                    label1.Text = progress.Value.ToString() + " /" + progress.Maximum.ToString();
                 }
                 Debug.Print("DataTable nesnesine aktarma başarılı...");
             }

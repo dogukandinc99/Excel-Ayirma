@@ -39,12 +39,14 @@
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
+            backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            label4 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // fileselectbtn
             // 
-            fileselectbtn.Location = new Point(566, 12);
+            fileselectbtn.Location = new Point(566, 9);
             fileselectbtn.Name = "fileselectbtn";
             fileselectbtn.Size = new Size(149, 32);
             fileselectbtn.TabIndex = 0;
@@ -55,19 +57,26 @@
             // 
             // adresstxt
             // 
-            adresstxt.Enabled = false;
+            adresstxt.BorderStyle = BorderStyle.None;
+            adresstxt.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
             adresstxt.Location = new Point(148, 9);
+            adresstxt.Multiline = true;
             adresstxt.Name = "adresstxt";
+            adresstxt.ReadOnly = true;
+            adresstxt.ScrollBars = ScrollBars.Vertical;
             adresstxt.Size = new Size(389, 23);
             adresstxt.TabIndex = 1;
+            adresstxt.WordWrap = false;
             // 
             // cellvaluetxt
             // 
+            cellvaluetxt.BorderStyle = BorderStyle.None;
+            cellvaluetxt.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
             cellvaluetxt.Location = new Point(148, 67);
             cellvaluetxt.Name = "cellvaluetxt";
-            cellvaluetxt.Size = new Size(389, 23);
+            cellvaluetxt.Size = new Size(389, 22);
             cellvaluetxt.TabIndex = 3;
-            cellvaluetxt.Text = "1-15";
+            cellvaluetxt.Text = "01-15";
             // 
             // dataGridView1
             // 
@@ -83,20 +92,22 @@
             progressBar1.Location = new Point(12, 96);
             progressBar1.Maximum = 10000;
             progressBar1.Name = "progressBar1";
-            progressBar1.Size = new Size(525, 23);
+            progressBar1.Size = new Size(423, 23);
             progressBar1.TabIndex = 6;
             // 
             // saveadressfoldertxt
             // 
-            saveadressfoldertxt.Enabled = false;
+            saveadressfoldertxt.BorderStyle = BorderStyle.None;
+            saveadressfoldertxt.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
             saveadressfoldertxt.Location = new Point(148, 38);
             saveadressfoldertxt.Name = "saveadressfoldertxt";
-            saveadressfoldertxt.Size = new Size(389, 23);
+            saveadressfoldertxt.ReadOnly = true;
+            saveadressfoldertxt.Size = new Size(389, 22);
             saveadressfoldertxt.TabIndex = 9;
             // 
             // saveselectedfolderbtn
             // 
-            saveselectedfolderbtn.Location = new Point(566, 50);
+            saveselectedfolderbtn.Location = new Point(566, 47);
             saveselectedfolderbtn.Name = "saveselectedfolderbtn";
             saveselectedfolderbtn.Size = new Size(149, 32);
             saveselectedfolderbtn.TabIndex = 10;
@@ -106,7 +117,7 @@
             // 
             // saveexcelbtn
             // 
-            saveexcelbtn.Location = new Point(566, 88);
+            saveexcelbtn.Location = new Point(566, 85);
             saveexcelbtn.Name = "saveexcelbtn";
             saveexcelbtn.Size = new Size(149, 32);
             saveexcelbtn.TabIndex = 11;
@@ -141,11 +152,22 @@
             label3.TabIndex = 12;
             label3.Text = "DOSYA ADI:";
             // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            label4.Location = new Point(441, 96);
+            label4.Name = "label4";
+            label4.Size = new Size(96, 21);
+            label4.TabIndex = 13;
+            label4.Text = "1000 / 1000";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(727, 377);
+            Controls.Add(label4);
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(label1);
@@ -177,5 +199,7 @@
         private Label label1;
         private Label label2;
         private Label label3;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private Label label4;
     }
 }

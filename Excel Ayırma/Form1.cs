@@ -6,27 +6,14 @@ namespace Excel_Ayırma
     {
         OpenFileDialog ofd = new OpenFileDialog();
         FolderBrowserDialog fbd = new FolderBrowserDialog();
-        ExcelIslemler excel = new ExcelIslemler();
+        ExcelIslemler excel;
         String folderpatch = "";
 
         public Form1()
         {
             InitializeComponent();
+            excel = new ExcelIslemler(progressBar1, label4);
         }
-
-        public void progressbarMax(int max)
-        {
-            progressBar1.Maximum = max;
-        }
-        public void progressbarFill()
-        {
-            progressBar1.Value += 1;
-        }
-        public void progressbarClear()
-        {
-            progressBar1.Value = 0;
-        }
-
         private void fileselectbtn_Click(object sender, EventArgs e)
         {
             ofd.Title = "Excel Dosyası Seçiniz.";
@@ -35,7 +22,11 @@ namespace Excel_Ayırma
             ofd.RestoreDirectory = true;
             ofd.Multiselect = true;
             ofd.ShowDialog();
-            adresstxt.Text = ofd.FileName;
+
+            for (int i = 0; i < ofd.FileNames.Length; i++)
+            {
+                adresstxt.Text += ofd.FileNames[i].ToString() + Environment.NewLine;
+            }
         }
 
         private void saveselectedfolderbtn_Click(object sender, EventArgs e)
