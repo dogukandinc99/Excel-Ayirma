@@ -112,7 +112,7 @@ namespace Excel_Ayırma
                 range = worksheet.Cells[i, columncontrolnumber + 1];
                 if (range.Value != null) // null değer kontrolü
                 {
-                    string value = range.Value;
+                    string value = range.Value.ToString();
                     Debug.Print(value.ToString());
                     if (!dict.ContainsKey(value))
                     {

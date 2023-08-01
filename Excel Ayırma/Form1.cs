@@ -45,6 +45,7 @@ namespace Excel_Ayırma
             {
                 excel.excelOpen(ofd.FileNames[i].ToString());
                 dataGridView1.DataSource = excel.getDataTable();
+                Debug.Print(ofd.FileNames[i].ToString()+" adlı dosya için işlem başlatılıyor...");
                 excel.saveExcel(saveadressfoldertxt.Text, cellvaluetxt.Text + "_" + ofd.SafeFileNames[i].ToString());
                 Debug.Print((i + 1) + " kayıdın aktarımı tamamlandı................................................");
             }
