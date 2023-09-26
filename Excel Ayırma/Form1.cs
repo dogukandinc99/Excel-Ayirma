@@ -45,11 +45,22 @@ namespace Excel_Ayırma
             {
                 excel.excelOpen(ofd.FileNames[i].ToString());
                 dataGridView1.DataSource = excel.getDataTable();
-                Debug.Print(ofd.FileNames[i].ToString()+" adlı dosya için işlem başlatılıyor...");
+                Debug.Print(ofd.SafeFileNames[i].ToString() + " adlı dosya için işlem başlatılıyor...");
                 excel.saveExcel(saveadressfoldertxt.Text, cellvaluetxt.Text + "_" + ofd.SafeFileNames[i].ToString());
                 Debug.Print((i + 1) + " kayıdın aktarımı tamamlandı................................................");
             }
             MessageBox.Show("Kayıt işlemi tamamlanmıştır.");
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < ofd.FileNames.Length; i++)
+            {
+                excel.excelOpen(ofd.FileNames[i].ToString());
+                excel.textToColumn();
+                excel.zeroChangeOne();
+                Debug.Print((i + 1) + " adlı dosya hazırlandı................................................");
+            }
         }
     }
 }

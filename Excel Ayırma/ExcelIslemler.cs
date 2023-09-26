@@ -37,9 +37,10 @@ namespace Excel_Ayırma
 
             //kontrol edilecek sütun
             columncontrolnumber = 8;
-            defaultValue();
+            /*defaultValue();
+
             sheetnamelist();
-            excelquit();
+            excelquit(false);*/
         }
 
 
@@ -59,6 +60,60 @@ namespace Excel_Ayırma
             dataTable();
         }
 
+        public void textToColumn()
+        {
+            _Excel.Range orijinalColumnRange = worksheet.Range["G:G"];
+            _Excel.Range newColumnRange = worksheet.UsedRange;
+
+            int rowindex = 1;
+            foreach (_Excel.Range cell in orijinalColumnRange.Cells)
+            {
+                if (cell.Value != null)
+                {
+                    int columnindex = 8;
+                    String[] cellparts = cell.Value.ToString().Split('\\');
+                    foreach (string part in cellparts)
+                    {
+                        newColumnRange.Cells[rowindex, columnindex].Value2 = part.ToString();
+                        columnindex++;
+                    }
+                    rowindex++;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            for (int i = 0; i < 2; i++)
+            {
+                newColumnRange = worksheet.Columns[8];
+                newColumnRange.Delete();
+            }
+
+        }
+
+        public void zeroChangeOne()
+        {
+            int rowindex = 2;
+            _Excel.Range originalColumn = worksheet.Range["F:F"];
+            foreach (_Excel.Range cell in originalColumn.Cells)
+            {
+                if (cell.Value != null)
+                {
+                    try
+                    {
+                        if (Convert.ToInt32(cell.Value.ToString()) == 0)
+                        {
+                            originalColumn.Cells[rowindex, 1].Value = 1;
+                        }                        
+                    }
+                    catch { continue; }                    
+                }
+                else break;
+                rowindex += 1;
+            }
+            excelquit(true);
+        }
 
         // Adresdeki exceli dataTableList nesnesine aktarır.
         void dataTable()
@@ -92,7 +147,7 @@ namespace Excel_Ayırma
             {
                 MessageBox.Show("Kayıtlar aktarılırken beklenmedik bir hata oluştu. " +
                     "Lütfen teknik birim ile iletişime geçiniz.\n Hata kodu:" + e.Message.ToString());
-                excelquit();
+                excelquit(false);
             }
         }
 
@@ -268,14 +323,14 @@ namespace Excel_Ayırma
             newExcel(adres, filename);
             sheetRowSpace();
             workbook.SaveAs(@adres + @"\" + filename, _Excel.XlFileFormat.xlWorkbookNormal);
-            excelquit();
+            excelquit(true);
         }
 
 
         // Açık olan exceli kapatır.
-        public void excelquit()
+        public void excelquit(Boolean saveornotsave)
         {
-            workbook.Close();
+            workbook.Close(saveornotsave);
             excel.Quit();
         }
     }
