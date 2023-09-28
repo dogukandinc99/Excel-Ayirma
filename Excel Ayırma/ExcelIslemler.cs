@@ -1,8 +1,6 @@
 ﻿using System.Data;
 using System.Diagnostics;
 using _Excel = Microsoft.Office.Interop.Excel;
-using System.Windows.Forms;
-using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace Excel_Ayırma
 {
@@ -26,8 +24,8 @@ namespace Excel_Ayırma
             this.label1 = label;
         }
 
-        // Gelen adresdeki excel dosyasını açar ve dataTable methodunu çalıştırır.
-        // dataTable methodu çalıştıkdan sonra adresdeki exceli kapatır.
+
+        // Gelen adresdeki excel dosyasını açar ve 1. sayfa seçilir.
         public void excelOpen(String path)
         {
             workbook = excel.Workbooks.Open(path);
@@ -35,7 +33,7 @@ namespace Excel_Ayırma
         }
 
 
-        // Exceli açtıktan sonra başka işlemler için yeniden çağırmam gerektiğinden dolayı excelOpen methodunu oluşturduö.
+        // Progresbar ilk ayarı için oluşturuldu.
         void progressBarSetting()
         {
             progress.Minimum = 0;
@@ -43,6 +41,8 @@ namespace Excel_Ayırma
             progress.Value = 0;
         }
 
+
+        // Hücreyi satırlara böler ve böldüğü satırlara başlık ekler.
         public void textToColumn()
         {
             _Excel.Range orijinalColumnRange = worksheet.Range["G:G"];
@@ -70,14 +70,15 @@ namespace Excel_Ayırma
                     break;
                 }
             }
+
             for (int i = 0; i < 2; i++)
             {
                 newColumnRange = worksheet.Columns[7];
                 newColumnRange.Delete();
             }
+
             int columnnumber = 65;
             rowindex = 1;
-
             newColumnRange = worksheet.UsedRange;
             for (int i = columnindex; i < (columnindex + 15); i++)
             {
@@ -87,6 +88,8 @@ namespace Excel_Ayırma
             }
         }
 
+
+        // Sürelerde sıfır yazanları 1 e dönüştürür.
         public void zeroChangeOne()
         {
             int rowindex = 2;
@@ -109,6 +112,7 @@ namespace Excel_Ayırma
             }
             excelquit(true);
         }
+
 
         // Adresdeki exceli dataTableList nesnesine aktarır.
         void dataTable()
@@ -184,7 +188,7 @@ namespace Excel_Ayırma
 
 
         // dataTableList nesnesini yeni bir excele kaydeder.
-        void newExcel(String adres, String filename)
+        void newExcel()
         {
             workbook = excel.Workbooks.Add(System.Reflection.Missing.Value);
             foreach (String item in dict.Keys)
@@ -324,14 +328,14 @@ namespace Excel_Ayırma
         }
 
 
-        // Yeni exceli kaydeder.
+        // İşlem yapılacak exceldeki verileri dataTableList nesnesine aktarır. Yeni excel oluşturur ve yapılması gereken işlmelerden sonra yeni exceli kaydeder.
         public void saveExcel(String adres, String filename)
         {
             dataTableList.Clear();
             dataTable();
             sheetnamelist();
             excelquit(false);
-            newExcel(adres, filename);
+            newExcel();
             sheetRowSpace();
             workbook.SaveAs(@adres + @"\" + filename, _Excel.XlFileFormat.xlWorkbookNormal);
             excelquit(true);
