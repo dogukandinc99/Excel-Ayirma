@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using _Excel = Microsoft.Office.Interop.Excel;
 using System.Windows.Forms;
+using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace Excel_Ayırma
 {
@@ -31,33 +32,15 @@ namespace Excel_Ayırma
         {
             workbook = excel.Workbooks.Open(path);
             worksheet = workbook.Worksheets[1];
-
-            //dizi List nesnesinin içini temizler.
-            dict.Clear();
-
-            //kontrol edilecek sütun
-            columncontrolnumber = 8;
-            /*defaultValue();
-
-            sheetnamelist();
-            excelquit(false);*/
         }
 
 
         // Exceli açtıktan sonra başka işlemler için yeniden çağırmam gerektiğinden dolayı excelOpen methodunu oluşturduö.
-        void defaultValue()
+        void progressBarSetting()
         {
-            //sayfadaki satır ve sütun sayısını değşkenlere aldım.
-            rowsCount = worksheet.UsedRange.Rows.Count;
-            columnsCount = worksheet.UsedRange.Columns.Count;
-
             progress.Minimum = 0;
             progress.Maximum = rowsCount - 1;
             progress.Value = 0;
-
-            //dataTableList nesnesini temizler
-            dataTableList.Clear();
-            dataTable();
         }
 
         public void textToColumn()
@@ -66,18 +49,21 @@ namespace Excel_Ayırma
             _Excel.Range newColumnRange = worksheet.UsedRange;
 
             int rowindex = 1;
+            int columnindex = 7;
             foreach (_Excel.Range cell in orijinalColumnRange.Cells)
             {
                 if (cell.Value != null)
                 {
-                    int columnindex = 8;
+
                     String[] cellparts = cell.Value.ToString().Split('\\');
+
                     foreach (string part in cellparts)
                     {
                         newColumnRange.Cells[rowindex, columnindex].Value2 = part.ToString();
                         columnindex++;
                     }
                     rowindex++;
+                    columnindex = 7;
                 }
                 else
                 {
@@ -86,10 +72,19 @@ namespace Excel_Ayırma
             }
             for (int i = 0; i < 2; i++)
             {
-                newColumnRange = worksheet.Columns[8];
+                newColumnRange = worksheet.Columns[7];
                 newColumnRange.Delete();
             }
+            int columnnumber = 65;
+            rowindex = 1;
 
+            newColumnRange = worksheet.UsedRange;
+            for (int i = columnindex; i < (columnindex + 15); i++)
+            {
+                String charr = Convert.ToChar(columnnumber).ToString();
+                newColumnRange.Cells[rowindex, i].Value = charr.ToString();
+                columnnumber++;
+            }
         }
 
         public void zeroChangeOne()
@@ -105,9 +100,9 @@ namespace Excel_Ayırma
                         if (Convert.ToInt32(cell.Value.ToString()) == 0)
                         {
                             originalColumn.Cells[rowindex, 1].Value = 1;
-                        }                        
+                        }
                     }
-                    catch { continue; }                    
+                    catch { continue; }
                 }
                 else break;
                 rowindex += 1;
@@ -120,6 +115,12 @@ namespace Excel_Ayırma
         {
             try
             {
+                //sayfadaki satır ve sütun sayısını değşkenlere aldım.
+                rowsCount = worksheet.UsedRange.Rows.Count;
+                columnsCount = worksheet.UsedRange.Columns.Count;
+
+                progressBarSetting();
+
                 // dataTableList nesnesine column oluşturuyor.
                 if (dataTableList.Columns.Count != columnsCount)
                 {
@@ -159,6 +160,9 @@ namespace Excel_Ayırma
         // Sayfa oluşturmak için aynı değerleri teke indirip diziye ekliyor
         void sheetnamelist()
         {
+            //dizi List nesnesinin içini temizler.
+            dict.Clear();
+
             _Excel.Range range;
 
             Debug.Print("Sayfa isimleri alınıyor...");
@@ -238,7 +242,10 @@ namespace Excel_Ayırma
             for (int i = 1; i <= workbook.Worksheets.Count; i++)
             {
                 worksheet = workbook.Worksheets[i];
-                defaultValue();
+
+                //dataTableList nesnesini temizler
+                dataTableList.Clear();
+                dataTable();
 
                 sheetname = worksheet.Name;
                 switch (sheetname)
@@ -320,6 +327,10 @@ namespace Excel_Ayırma
         // Yeni exceli kaydeder.
         public void saveExcel(String adres, String filename)
         {
+            dataTableList.Clear();
+            dataTable();
+            sheetnamelist();
+            excelquit(false);
             newExcel(adres, filename);
             sheetRowSpace();
             workbook.SaveAs(@adres + @"\" + filename, _Excel.XlFileFormat.xlWorkbookNormal);
