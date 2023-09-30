@@ -328,7 +328,7 @@ namespace Excel_Ayırma
         }
 
 
-        // İşlem yapılacak exceldeki verileri dataTableList nesnesine aktarır. Yeni excel oluşturur ve yapılması gereken işlmelerden sonra yeni exceli kaydeder.
+        // devam İşlem yapılacak exceldeki verileri dataTableList nesnesine aktarır. Yeni excel oluşturur ve yapılması gereken işlmelerden sonra yeni exceli kaydeder.
         public void saveExcel(String adres, String filename)
         {
             dataTableList.Clear();
