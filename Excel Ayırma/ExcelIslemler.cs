@@ -28,8 +28,16 @@ namespace Excel_Ayırma
         // Gelen adresdeki excel dosyasını açar ve 1. sayfa seçilir.
         public void excelOpen(String path)
         {
-            workbook = excel.Workbooks.Open(path);
-            worksheet = workbook.Worksheets[1];
+            try
+            {
+                workbook = excel.Workbooks.Open(path);
+                worksheet = workbook.Worksheets[1];
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Dosya açılırken bir sorun oluştu. \nHata Kodu: " + e.ToString());
+            }
+
         }
 
 
@@ -47,45 +55,69 @@ namespace Excel_Ayırma
         {
             _Excel.Range orijinalColumnRange = worksheet.Range["G:G"];
             _Excel.Range newColumnRange = worksheet.UsedRange;
-
             int rowindex = 1;
             int columnindex = 7;
-            foreach (_Excel.Range cell in orijinalColumnRange.Cells)
+            try
             {
-                if (cell.Value != null)
+                foreach (_Excel.Range cell in orijinalColumnRange.Cells)
                 {
-
-                    String[] cellparts = cell.Value.ToString().Split('\\');
-
-                    foreach (string part in cellparts)
+                    if (cell.Value != null)
                     {
-                        newColumnRange.Cells[rowindex, columnindex].Value2 = part.ToString();
-                        columnindex++;
+                        String[] cellparts = cell.Value.ToString().Split('\\');
+
+                        foreach (string part in cellparts)
+                        {
+                            newColumnRange.Cells[rowindex, columnindex].Value2 = part.ToString();
+                            columnindex++;
+                        }
+                        rowindex++;
+                        columnindex = 7;
                     }
-                    rowindex++;
-                    columnindex = 7;
+                    else
+                    {
+                        break;
+                    }
                 }
-                else
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Hücreler sütunlara bölünürken bir sorun oluştu. \n Hata kodu: " + e.ToString());
+            }
+
+            try
+            {
+                // bölme işlemi yapıldıktan sonra ilk 2 sütun boş geliyordu. boş sürunları sildim.
+                for (int i = 0; i < 2; i++)
                 {
-                    break;
+                    newColumnRange = worksheet.Columns[7];
+                    newColumnRange.Delete();
                 }
             }
-
-            for (int i = 0; i < 2; i++)
+            catch (Exception e)
             {
-                newColumnRange = worksheet.Columns[7];
-                newColumnRange.Delete();
+                MessageBox.Show("Boş sütunlar silinirkenbir hata oluştu. \n Hata kodu: " + e.ToString());
             }
 
-            int columnnumber = 65;
-            rowindex = 1;
-            newColumnRange = worksheet.UsedRange;
-            for (int i = columnindex; i < (columnindex + 15); i++)
+            try
             {
-                String charr = Convert.ToChar(columnnumber).ToString();
-                newColumnRange.Cells[rowindex, i].Value = charr.ToString();
-                columnnumber++;
+                // İlk sütun bölme işlemi yaptıktan sonra boş geliyordu. Harfler ile doldurdum.
+                int columnnumber = 65;
+                rowindex = 1;
+                newColumnRange = worksheet.UsedRange;
+                for (int i = columnindex; i < (columnindex + 15); i++)
+                {
+                    String charr = Convert.ToChar(columnnumber).ToString();
+                    newColumnRange.Cells[rowindex, i].Value = charr.ToString();
+                    columnnumber++;
+                }
             }
+            catch (Exception e)
+            {
+
+                MessageBox.Show("İlk satırda boş olan hücrelere harf eklenirken bir hata oluştu. \n Hata kodu: " + e.ToString());
+            }
+
         }
 
 
