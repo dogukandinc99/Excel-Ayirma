@@ -125,23 +125,32 @@ namespace Excel_Ayırma
         public void zeroChangeOne()
         {
             int rowindex = 2;
-            _Excel.Range originalColumn = worksheet.Range["F:F"];
-            foreach (_Excel.Range cell in originalColumn.Cells)
+            try
             {
-                if (cell.Value != null)
+                _Excel.Range originalColumn = worksheet.Range["F:F"];
+                foreach (_Excel.Range cell in originalColumn.Cells)
                 {
-                    try
+                    if (cell.Value != null)
                     {
-                        if (Convert.ToInt32(cell.Value.ToString()) == 0)
+                        try
                         {
-                            originalColumn.Cells[rowindex, 1].Value = 1;
+                            if (Convert.ToInt32(cell.Value.ToString()) == 0)
+                            {
+                                originalColumn.Cells[rowindex, 1].Value = 1;
+                            }
                         }
+                        catch { continue; }
                     }
-                    catch { continue; }
+                    else break;
+                    rowindex += 1;
                 }
-                else break;
-                rowindex += 1;
             }
+            catch (Exception e)
+            {
+
+                MessageBox.Show("Süresi sıfır olanları bir yaparken sorun oluştu.. \n Hata kodu: " + e.ToString());
+            }
+
             excelquit(true);
         }
 
