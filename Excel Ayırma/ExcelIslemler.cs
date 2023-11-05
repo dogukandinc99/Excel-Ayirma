@@ -32,6 +32,7 @@ namespace Excel_Ayırma
             {
                 workbook = excel.Workbooks.Open(path);
                 worksheet = workbook.Worksheets[1];
+                columncontrolnumber = 8;
             }
             catch (Exception e)
             {
