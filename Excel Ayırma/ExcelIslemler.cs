@@ -291,6 +291,7 @@ namespace Excel_Ayırma
 
                 //dataTableList nesnesini temizler
                 dataTableList.Clear();
+                Debug.Print(i.ToString()+". sayfa DataTable nesnesine aktarımı yapılıyor...");
                 dataTable();
 
                 sheetname = worksheet.Name;
