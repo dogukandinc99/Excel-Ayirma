@@ -41,7 +41,7 @@
             label3 = new Label();
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             label4 = new Label();
-            button1 = new Button();
+            rdybtn = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -163,22 +163,22 @@
             label4.TabIndex = 13;
             label4.Text = "1000 / 1000";
             // 
-            // button1
+            // rdybtn
             // 
-            button1.Location = new Point(566, 87);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 32);
-            button1.TabIndex = 14;
-            button1.Text = "HAZIRLA";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            rdybtn.Location = new Point(566, 87);
+            rdybtn.Name = "rdybtn";
+            rdybtn.Size = new Size(75, 32);
+            rdybtn.TabIndex = 14;
+            rdybtn.Text = "HAZIRLA";
+            rdybtn.UseVisualStyleBackColor = true;
+            rdybtn.Click += rdybtn_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(727, 377);
-            Controls.Add(button1);
+            Controls.Add(rdybtn);
             Controls.Add(label4);
             Controls.Add(label3);
             Controls.Add(label2);
@@ -213,6 +213,6 @@
         private Label label3;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private Label label4;
-        private Button button1;
+        private Button rdybtn;
     }
 }

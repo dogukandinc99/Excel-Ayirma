@@ -52,7 +52,7 @@ namespace Excel_Ayırma
             MessageBox.Show("Kayıt işlemi tamamlanmıştır.");
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void rdybtn_Click(object sender, EventArgs e)
         {
             for (int i = 0; i < ofd.FileNames.Length; i++)
             {
@@ -61,6 +61,7 @@ namespace Excel_Ayırma
                 excel.zeroChangeOne();
                 Debug.Print((i + 1) + " adlı dosya hazırlandı................................................");
             }
+            MessageBox.Show("Excel dosyaları ayırma işlemi için hazırlandı.");
         }
     }
 }
