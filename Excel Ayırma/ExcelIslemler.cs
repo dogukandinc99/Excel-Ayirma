@@ -54,6 +54,8 @@ namespace Excel_Ayırma
         // Hücreyi satırlara böler ve böldüğü satırlara başlık ekler.
         public void textToColumn()
         {
+            Debug.Print("Satırlar sütunlara dönüştürülüyor...");
+
             _Excel.Range orijinalColumnRange = worksheet.Range["G:G"];
             _Excel.Range newColumnRange = worksheet.UsedRange;
             int rowindex = 1;
@@ -126,6 +128,8 @@ namespace Excel_Ayırma
         // Sürelerde sıfır yazanları 1 e dönüştürür.
         public void zeroChangeOne()
         {
+            Debug.Print("Süreleri sıfır olanlar bir ile değiştiriliyor...");
+
             int rowindex = 2;
             try
             {
