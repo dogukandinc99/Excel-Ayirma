@@ -112,6 +112,7 @@ namespace Excel_Ayırma
                     newColumnRange.Cells[rowindex, i].Value = charr.ToString();
                     columnnumber++;
                 }
+
             }
             catch (Exception e)
             {
@@ -188,6 +189,11 @@ namespace Excel_Ayırma
                     progress.Value += 1;
                     label1.Text = progress.Value.ToString() + " /" + progress.Maximum.ToString();
                 }
+
+                DataView dataView = dataTableList.DefaultView;
+                dataView.Sort = dataTableList.Columns[columncontrolnumber].ColumnName + " ASC";
+                dataTableList = dataView.ToTable();
+
                 Debug.Print("DataTable nesnesine aktarma başarılı...");
             }
             catch (Exception e)
@@ -208,26 +214,31 @@ namespace Excel_Ayırma
         {
             //dizi List nesnesinin içini temizler.
             dict.Clear();
-
-            _Excel.Range range;
+            bool start = false;
+            int sayi = 0;
 
             Debug.Print("Sayfa isimleri alınıyor...");
-            for (int i = 2; i < worksheet.Rows.Count + 1; i++)
+            for (int i = 1; i < dataTableList.Rows.Count - 1; i++)
             {
-                range = worksheet.Cells[i, columncontrolnumber + 1];
-                if (range.Value != null) // null değer kontrolü
-                {
-                    string value = range.Value.ToString();
-                    Debug.Print(value.ToString());
+               string value = dataTableList.Rows[i][columncontrolnumber].ToString();
+
+                if (value != null) // null değer kontrolü
+                {                    
+                    sayi++;
                     if (!dict.ContainsKey(value))
                     {
                         dict.Add(value, 1);
+                        if (start == true)
+                        {
+                            Debug.Print(dataTableList.Rows[i - 1][columncontrolnumber].ToString() + ": " + sayi);
+                        }
+                        start = true;
+                        sayi = 0;
                     }
                 }
                 else break;
             }
         }
-
 
         // dataTableList nesnesini yeni bir excele kaydeder.
         void newExcel()
@@ -291,7 +302,7 @@ namespace Excel_Ayırma
 
                 //dataTableList nesnesini temizler
                 dataTableList.Clear();
-                Debug.Print(i.ToString()+". sayfa DataTable nesnesine aktarımı yapılıyor...");
+                Debug.Print(i.ToString() + ". sayfa DataTable nesnesine aktarımı yapılıyor...");
                 dataTable();
 
                 sheetname = worksheet.Name;
