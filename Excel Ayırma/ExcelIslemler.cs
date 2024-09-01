@@ -222,7 +222,7 @@ namespace Excel_Ayırma
             int sayi = 0;
 
             Debug.Print("Sayfa isimleri alınıyor...");
-            for (int i = 1; i < dataTableList.Rows.Count - 1; i++)
+            for (int i = 1; i < dataTableList.Rows.Count; i++)
             {
                string value = dataTableList.Rows[i][columncontrolnumber].ToString();
 
